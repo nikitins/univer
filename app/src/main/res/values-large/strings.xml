@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="action_course_rename">Переименовать</string>
+    <string name="action_course_remove">Удалить</string>
+    <string name="empty_course_list">Список курсов пуст</string>
+    <string name="empty_group_list">Список групп пуст</string>
+</resources>

@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.sgu.univer.app.fragments.CourseFragment" >
+
+    <item android:id="@+id/action_group_rename"
+        android:title="@string/action_course_rename"
+        android:orderInCategory="100"
+        />
+    <item android:id="@+id/action_group_remove"
+        android:title="@string/action_course_remove"
+        android:orderInCategory="100"
+        />
+</menu>
