@@ -155,7 +155,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         courseFragment.removeCourse(course.id);
-                        showMessage(course.name + " удален");
+                        showMessage(item.toString() + " удален");
                         dialog.dismiss();
                     }
                 });

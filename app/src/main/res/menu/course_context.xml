@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ru.sgu.univer.app.fragments.CourseFragment" >
 
-    <item android:id="@+id/action_group_rename"
+    <item android:id="@+id/action_course_rename"
         android:title="@string/action_course_rename"
         android:orderInCategory="100"
-        />
-    <item android:id="@+id/action_group_remove"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_course_remove"
         android:title="@string/action_course_remove"
         android:orderInCategory="100"
-        />
+        app:showAsAction="never" />
 </menu>

@@ -4,12 +4,10 @@ import android.app.ListActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import java.util.Stack;
 
@@ -37,14 +35,8 @@ public class GroupListActivity extends ListActivity {
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-//        parent = findViewById(R.layout.activity_group_list);
-//        registerForContextMenu(parent);
+        parent = findViewById(R.layout.activity_group_list);
         return super.onCreateView(parent, name, context, attrs);
-    }
-
-    @Override
-    protected void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
     }
 
     @Override
