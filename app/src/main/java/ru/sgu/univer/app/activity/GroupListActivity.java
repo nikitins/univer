@@ -2,7 +2,6 @@ package ru.sgu.univer.app.activity;
 
 import android.app.ListActivity;
 import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.ContextMenu;
@@ -38,8 +37,8 @@ public class GroupListActivity extends ListActivity {
 
     @Override
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
-        parent = findViewById(R.layout.activity_group_list);
-        registerForContextMenu(parent);
+//        parent = findViewById(R.layout.activity_group_list);
+//        registerForContextMenu(parent);
         return super.onCreateView(parent, name, context, attrs);
     }
 
