@@ -29,7 +29,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
      * {@link android.support.v4.app.FragmentStatePagerAdapter}.
      */
     SectionsPagerAdapter mSectionsPagerAdapter;
-    GroupFragment groupFragment = GroupFragment.newInstance();
+    GroupFragment groupFragment;
 
     /**
      * The {@link ViewPager} that will host the section contents.
@@ -40,7 +40,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-
+        groupFragment = GroupFragment.newInstance();
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());

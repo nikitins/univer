@@ -2,17 +2,18 @@ package ru.sgu.univer.app.activity;
 
 import android.app.ListActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import java.util.Stack;
 
 import ru.sgu.univer.app.R;
-import ru.sgu.univer.app.objects.Group;
 
 public class GroupListActivity extends ListActivity {
     private ArrayAdapter<String> adapter;
@@ -37,6 +38,13 @@ public class GroupListActivity extends ListActivity {
     public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
         parent = findViewById(R.layout.activity_group_list);
         return super.onCreateView(parent, name, context, attrs);
+    }
+
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(this, GroupActivity.class);
+        intent.putExtra("parent", "123");
+        startActivity(intent);
     }
 
     @Override

@@ -1,24 +1,28 @@
 package ru.sgu.univer.app.providers;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+public class DataBase {
 
-public class DataBase extends SQLiteOpenHelper {
-    private static final String DATABASE_NAME = "cat_database.db";
-    private static final int DATABASE_VERSION = 1;
 
-    public DataBase(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+
+    public static class StudentTable {
+        public static final String TABLE_NAME = "student_table";
+        public static final String ID = "_id";
+        public static final String NAME = "name";
+        public static final String LAST_NAME = "lastname";
+        public static final String SECOND_NAME = "secondname";
+        public static final String GROUP_ID = "groupid";
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-
+    public static class GroupTable {
+        public static final String TABLE_NAME = "group_table";
+        public static final String ID = "_id";
+        public static final String NAME = "name";
+        public static final String COURSE_ID = "courseid";
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+    public static class CourseTable {
+        public static final String TABLE_NAME = "course_table";
+        public static final String ID = "_id";
+        public static final String NAME = "name";
     }
 }
