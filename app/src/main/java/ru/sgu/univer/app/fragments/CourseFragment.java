@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Course;
-import ru.sgu.univer.app.providers.CourseProvider;
+import ru.sgu.univer.app.providers.DataBase;
 
 public class CourseFragment extends ListFragment{
 
@@ -52,9 +52,11 @@ public class CourseFragment extends ListFragment{
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
+        for (int i = 0; i < 5; i++) {
+            DataBase.putCourse(getActivity(), "Курс " + Integer.toString(i + 1));
+        }
         mAdapter = new ArrayAdapter<Course>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, CourseProvider.getItems());
+                android.R.layout.simple_list_item_1, android.R.id.text1, DataBase.getCourses(getActivity()));
     }
 
     @Override
@@ -88,22 +90,23 @@ public class CourseFragment extends ListFragment{
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         if (null != clickListener) {
-            clickListener.onCourseFragmentItemClick(CourseProvider.getByPosition(position).id);
+//            clickListener.onCourseFragmentItemClick(CourseProvider.getByPosition(position).id);
+            clickListener.onCourseFragmentItemClick("1");
         }
     }
 
     public void addCourse(String name) {
-        CourseProvider.add(name);
+//        CourseProvider.add(name);
         mAdapter.notifyDataSetChanged();
     }
 
     public void removeCourse(String id) {
-        CourseProvider.removeById(id);
+//        CourseProvider.removeById(id);
         mAdapter.notifyDataSetChanged();
     }
 
     public void renameCourse(String id, String newName) {
-        CourseProvider.renameById(id, newName);
+//        CourseProvider.renameById(id, newName);
         mAdapter.notifyDataSetChanged();
     }
 
