@@ -49,9 +49,31 @@ public class GroupProvider {
         }
     }
 
-
+    public static void renameGroup(int id, String newName) {
+        for (Group group : groups) {
+            if(group.getId() == id) {
+                group.setName(newName);
+                for (Group group1 : groupMap.get(group.getCourseId())) {
+                    if(group1.getId() == id) {
+                        group1.setName(newName);
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+    }
 
     private static int getUid() {
         return uid++;
+    }
+
+    public static boolean hasGroup(String name) {
+        for (Group group : groups) {
+            if(group.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

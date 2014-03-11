@@ -12,7 +12,8 @@
 
     <TextView
         android:id="@android:id/empty"
-        android:text="@string/hello_world"
+        android:text="@string/empty_group_list"
+        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ListView

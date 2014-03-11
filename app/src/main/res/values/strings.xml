@@ -15,5 +15,10 @@
     <string name="empty_course_list">Список курсов пуст</string>
     <string name="empty_group_list">Список групп пуст</string>
     <string name="title_activity_group_list">GroupListActivity</string>
+    <string name="action_group_rename">Переименовать</string>
+    <string name="action_group_remove">Удалить</string>
+    <string name="action_add_group">Добавить</string>
+    <string name="empty_student_list">Список студентов пуст</string>
+    <string name="action_add_student">Добавить</string>
 
 </resources>

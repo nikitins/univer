@@ -72,9 +72,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_settings: {
-                return true;
-            }
             case R.id.action_add_course: {
                 addCourse();
                 return true;
@@ -155,7 +152,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         courseFragment.removeCourse(course.id);
-                        showMessage(item.toString() + " удален");
+                        showMessage(course.name + " удален");
                         dialog.dismiss();
                     }
                 });
@@ -209,8 +206,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     }
                 });
         builder.show();
-
-
     }
 
     private void showMessage(String message) {

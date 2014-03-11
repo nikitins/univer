@@ -53,4 +53,15 @@ public class StudentProvider {
             }
         }
     }
+
+    public static void removeStudentByGroupId(int groupId) {
+        List<Student> forRemoving = new ArrayList<Student>();
+        for (Student student : students) {
+            if(student.getGroupId() == groupId) {
+                forRemoving.add(student);
+            }
+        }
+        students.removeAll(forRemoving);
+        studentsMap.remove(groupId);
+    }
 }

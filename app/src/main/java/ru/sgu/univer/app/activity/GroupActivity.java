@@ -55,7 +55,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_add_student) {
             return true;
         }
         return super.onOptionsItemSelected(item);

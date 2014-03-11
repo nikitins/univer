@@ -15,6 +15,7 @@ import android.widget.ListView;
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Course;
 import ru.sgu.univer.app.providers.CourseProvider;
+import ru.sgu.univer.app.providers.GroupProvider;
 
 public class CourseFragment extends ListFragment{
 
