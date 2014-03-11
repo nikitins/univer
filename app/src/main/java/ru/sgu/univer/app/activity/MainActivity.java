@@ -213,7 +213,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 Toast.LENGTH_SHORT).show();
     }
 
-
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
         mViewPager.setCurrentItem(tab.getPosition());

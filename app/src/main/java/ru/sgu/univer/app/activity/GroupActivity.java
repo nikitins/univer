@@ -2,6 +2,7 @@ package ru.sgu.univer.app.activity;
 
 import java.util.Locale;
 
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,14 +15,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.sgu.univer.app.fragments.GroupFragment;
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.fragments.RatingFragment;
 
-public class GroupActivity extends ActionBarActivity implements GroupFragment.OnFragmentInteractionListener {
+public class GroupActivity extends ActionBarActivity implements GroupFragment.OnFragmentInteractionListener, RatingFragment.OnFragmentInteractionListener {
     public static final String GROUP_ID_EXTRA = "group_id_extra";
     SectionsPagerAdapter mSectionsPagerAdapter;
     GroupFragment groupFragment;
+    RatingFragment ratingFragment;
     ViewPager mViewPager;
 
     @Override
@@ -30,6 +34,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
         setContentView(R.layout.activity_group);
         int groupId = getIntent().getIntExtra(GROUP_ID_EXTRA, 0);
         groupFragment = GroupFragment.newInstance(groupId);
+        ratingFragment = RatingFragment.newInstance(groupId);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -66,6 +71,10 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
         //TODO
     }
 
+    @Override
+    public void onTableFragmentInteraction(Uri uri) {
+        showMessage(uri.toString());
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -83,6 +92,9 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 //            Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
                 return groupFragment;
+            }
+            if (position == 1) {
+                return ratingFragment;
             }
             return PlaceholderFragment.newInstance(position + 1);
         }
@@ -106,6 +118,11 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
             }
             return null;
         }
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
     }
 
     /**
