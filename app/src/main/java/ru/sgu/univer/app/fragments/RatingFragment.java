@@ -28,8 +28,6 @@ import ru.sgu.univer.app.objects.Student;
 import ru.sgu.univer.app.providers.StudentProvider;
 
 public class RatingFragment extends Fragment {
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     public static final String GROUP_ID_RATING_PARAM = "group_id_rating_param";
 
     private int groupId;

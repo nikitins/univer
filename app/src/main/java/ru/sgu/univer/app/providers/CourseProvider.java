@@ -33,7 +33,7 @@ public class CourseProvider {
             for (int i = 0; i < 5; i++) {
                 int groupid = GroupProvider.addGroup(course.id, course.name.
                         charAt(course.name.length() - 1) + "0" + String.valueOf(i+1)).getId();
-                for (int j = 0; j < 15; j++) {
+                for (int j = 0; j < 12; j++) {
                     Random random = new Random();
                     StudentProvider.add(names[random.nextInt(names.length)],
                             lastNames[random.nextInt(lastNames.length)], "123", groupid);

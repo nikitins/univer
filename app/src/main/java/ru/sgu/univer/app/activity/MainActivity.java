@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import ru.sgu.univer.app.fragments.CourseFragment;
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.fragments.RatingFragment;
+import ru.sgu.univer.app.fragments.ScheduleFragment;
 import ru.sgu.univer.app.objects.Course;
 import ru.sgu.univer.app.providers.CourseProvider;
 
@@ -243,7 +245,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 2) {
+            if (position == 1) {
+                return new ScheduleFragment();
+            }
+            if (position == 0) {
                 return courseFragment;
             }
             return PlaceholderFragment.newInstance(position + 1);
@@ -252,18 +257,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
             switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
+                    return "Рассписание";
+                case 0:
                     return "Рейтинг";
             }
             return null;
