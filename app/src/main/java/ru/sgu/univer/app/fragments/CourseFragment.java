@@ -2,7 +2,6 @@ package ru.sgu.univer.app.fragments;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Course;
@@ -54,7 +52,7 @@ public class CourseFragment extends ListFragment{
         }
 
         mAdapter = new ArrayAdapter<Course>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, CourseProvider.getItems());
+                android.R.layout.simple_list_item_1, android.R.id.text1, CourseProvider.getCourses());
     }
 
     @Override
@@ -97,17 +95,17 @@ public class CourseFragment extends ListFragment{
         mAdapter.notifyDataSetChanged();
     }
 
-    public void removeCourse(String id) {
+    public void removeCourse(int id) {
         CourseProvider.removeById(id);
         mAdapter.notifyDataSetChanged();
     }
 
-    public void renameCourse(String id, String newName) {
+    public void renameCourse(int id, String newName) {
         CourseProvider.renameById(id, newName);
         mAdapter.notifyDataSetChanged();
     }
 
     public interface OnCourseFragmentItemClickListener {
-        public void onCourseFragmentItemClick(String id);
+        public void onCourseFragmentItemClick(int id);
     }
 }

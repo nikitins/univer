@@ -14,15 +14,19 @@ import android.widget.ListView;
 import java.util.Stack;
 
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.objects.Group;
+import ru.sgu.univer.app.providers.GroupProvider;
 
 public class GroupListActivity extends ListActivity {
-    private ArrayAdapter<String> adapter;
+    public static final String COURSE_ID_EXTRA = "course_id_extra";
+    private ArrayAdapter<Group> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        int groupId = getIntent().getIntExtra(COURSE_ID_EXTRA, 0);
         setContentView(R.layout.activity_group_list);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new String[]{"j", "jhf"});
+        adapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, GroupProvider.getGroupsByCourseId(groupId));
         setListAdapter(adapter);
     }
 
@@ -43,7 +47,7 @@ public class GroupListActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(this, GroupActivity.class);
-        intent.putExtra("parent", "123");
+        intent.putExtra(GroupActivity.GROUP_ID_EXTRA, adapter.getItem(position).getId());
         startActivity(intent);
     }
 

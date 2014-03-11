@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Group {
-    private String id;
+    private int id;
     private String name;
-    private String courseId;
+    private int courseId;
     private List<Student> students = new ArrayList<Student>();
     private Map<String, Student> studentMap = new HashMap<String, Student>();
 
-    public Group(String id, String name, String courseId) {
+    public Group(int id, String name, int courseId) {
         this.id = id;
         this.name = name;
         this.courseId = courseId;
@@ -26,11 +26,11 @@ public class Group {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public String getCourseId() {
+    public int getCourseId() {
         return courseId;
     }
 
@@ -45,7 +45,8 @@ public class Group {
 
         Group group = (Group) o;
 
-        if (id != null ? !id.equals(group.id) : group.id != null) return false;
+        if (courseId != group.courseId) return false;
+        if (id != group.id) return false;
         if (name != null ? !name.equals(group.name) : group.name != null) return false;
 
         return true;
@@ -53,8 +54,9 @@ public class Group {
 
     @Override
     public int hashCode() {
-        int result = id != null ? id.hashCode() : 0;
+        int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + courseId;
         return result;
     }
 

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import ru.sgu.univer.app.objects.Course;
 
@@ -15,17 +16,31 @@ import ru.sgu.univer.app.objects.Course;
  */
 public class CourseProvider {
 
-    private static List<Course> items = new ArrayList<Course>();
-    private static Map<String, Course> itemMap = new HashMap<String, Course>();
+    private static List<Course> courses = new ArrayList<Course>();
+    private static Map<Integer, Course> courseMap = new HashMap<Integer, Course>();
     private static int uid = 0;
 
     static {
-        // Add 3 sample items.
+        // Add 3 sample courses.
+        String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля"};
+        String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко"};
         add("Курс 1");
         add("Курс 2");
         add("Курс 3");
         add("Курс 4");
         add("Курс 5");
+        for (Course course : courses) {
+            for (int i = 0; i < 5; i++) {
+                int groupid = GroupProvider.addGroup(course.id, course.name.
+                        charAt(course.name.length() - 1) + "0" + String.valueOf(i+1)).getId();
+                for (int j = 0; j < 3; j++) {
+                    Random random = new Random();
+                    StudentProvider.add(names[random.nextInt(names.length)],
+                            lastNames[random.nextInt(lastNames.length)], "123", groupid);
+                }
+
+            }
+        }
     }
 
     private static int getUid() {
@@ -33,32 +48,32 @@ public class CourseProvider {
     }
 
     public static void add(String name) {
-        Course item = new Course(String.valueOf(getUid()), name);
-        itemMap.put(item.id, item);
-        items.add(item);
+        Course item = new Course(getUid(), name);
+        courseMap.put(item.id, item);
+        courses.add(item);
     }
 
-    public static List<Course> getItems() {
-        return items;
+    public static List<Course> getCourses() {
+        return courses;
     }
 
-    public static Course getById(String id) {
-        return itemMap.get(id);
+    public static Course getById(int id) {
+        return courseMap.get(id);
     }
 
     public static Course getByPosition(int position) {
-        return items.get(position);
+        return courses.get(position);
     }
 
-    public static void removeById(String id) {
-        Course course = itemMap.remove(id);
-        items.remove(course);
+    public static void removeById(int id) {
+        Course course = courseMap.remove(id);
+        courses.remove(course);
     }
 
-    public static void renameById(String id, String newName) {
-        itemMap.get(id).name = newName;
-        for (Course item : items) {
-            if (item.id.equals(id)) {
+    public static void renameById(int id, String newName) {
+        courseMap.get(id).name = newName;
+        for (Course item : courses) {
+            if (item.id == id) {
                 item.name = newName;
                 break;
             }
@@ -66,12 +81,11 @@ public class CourseProvider {
     }
 
     public static boolean hasCourse(String name) {
-        for (Course item : items) {
+        for (Course item : courses) {
             if (item.name.equals(name)) {
                 return true;
             }
         }
         return false;
     }
-
 }

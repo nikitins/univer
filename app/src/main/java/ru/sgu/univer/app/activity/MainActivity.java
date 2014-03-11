@@ -233,9 +233,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onCourseFragmentItemClick(String id) {
+    public void onCourseFragmentItemClick(int id) {
         Intent intent = new Intent(this, GroupListActivity.class);
-        intent.putExtra("parent", CourseProvider.getById(id).toString());
+        intent.putExtra(GroupListActivity.COURSE_ID_EXTRA, CourseProvider.getById(id).id);
         startActivity(intent);
     }
 
