@@ -27,7 +27,6 @@ import android.widget.Toast;
 import ru.sgu.univer.app.fragments.CourseFragment;
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Course;
-import ru.sgu.univer.app.providers.CourseProvider;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
         CourseFragment.OnCourseFragmentItemClickListener {
@@ -122,11 +121,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             dialog.dismiss();
                             return;
                         }
-                        if(CourseProvider.hasCourse(name)) {
-                            showMessage("Имя " + name + " уже зенято.");
-                            dialog.dismiss();
-                            return;
-                        }
+//                        if(CourseProvider.hasCourse(name)) {
+//                            showMessage("Имя " + name + " уже зенято.");
+//                            dialog.dismiss();
+//                            return;
+//                        }
                         courseFragment.addCourse(name);
                     }
 
@@ -144,7 +143,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     public void removeCourse(final MenuItem item) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        final Course course = CourseProvider.getByPosition(aMenuInfo.position);
+        final Course course = courseFragment.getCourseByPosition(aMenuInfo.position);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Вы хотите удалить " + course.name + "?");
         builder.setCancelable(false);
@@ -155,7 +154,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         courseFragment.removeCourse(course.id);
-                        showMessage(item.toString() + " удален");
+                        showMessage(course.name + " удален");
                         dialog.dismiss();
                     }
                 });
@@ -173,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void renameCourse(MenuItem item) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        final Course course = CourseProvider.getByPosition(aMenuInfo.position);
+        final Course course = courseFragment.getCourseByPosition(aMenuInfo.position);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Введите новое имя");
         builder.setCancelable(false);
@@ -191,11 +190,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             dialog.dismiss();
                             return;
                         }
-                        if(CourseProvider.hasCourse(newName) && !newName.equals(course.name)) {
-                            showMessage("Имя " + newName + " уже зенято.");
-                            dialog.dismiss();
-                            return;
-                        }
+//                        if(CourseProvider.hasCourse(newName) && !newName.equals(course.name)) {
+//                            showMessage("Имя " + newName + " уже зенято.");
+//                            dialog.dismiss();
+//                            return;
+//                        }
                         courseFragment.renameCourse(course.id, newName);
                     }
 
@@ -235,7 +234,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     @Override
     public void onCourseFragmentItemClick(String id) {
         Intent intent = new Intent(this, GroupListActivity.class);
-        intent.putExtra("parent", CourseProvider.getById(id).toString());
+//        intent.putExtra("parent", CourseProvider.getById(id).toString());
         startActivity(intent);
     }
 

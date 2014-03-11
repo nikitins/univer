@@ -44,6 +44,10 @@ public class CourseFragment extends ListFragment{
     public CourseFragment() {
     }
 
+    public Course getCourseByPosition(int pos) {
+        return (Course) mAdapter.getItem(pos);
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +55,6 @@ public class CourseFragment extends ListFragment{
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-        for (int i = 0; i < 5; i++) {
-            DataBase.putCourse(getActivity(), "Курс " + Integer.toString(i + 1));
         }
         mAdapter = new ArrayAdapter<Course>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, DataBase.getCourses(getActivity()));
@@ -96,12 +97,12 @@ public class CourseFragment extends ListFragment{
     }
 
     public void addCourse(String name) {
-//        CourseProvider.add(name);
+        DataBase.putCourse(getActivity(), name);
         mAdapter.notifyDataSetChanged();
     }
 
     public void removeCourse(String id) {
-//        CourseProvider.removeById(id);
+        DataBase.removeCourse(getActivity(), Integer.valueOf(id));
         mAdapter.notifyDataSetChanged();
     }
 
