@@ -11,75 +11,29 @@
             <TableLayout android:id="@+id/rating_table_layout"
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content">
-                <TableRow style="@style/HeaderRow">
-                    <EditText android:id="@+id/table_head"
+                <TableRow style="@style/HeaderRow" android:id="@+id/table_head">
+                    <EditText
                         android:text="Имя"
                         style="@style/HeaderText"
                         android:inputType="text" />
+                    <EditText
+                        android:text="Лекция 1"
+                        style="@style/HeaderText"
+                        android:inputType="text" />
+                    <EditText
+                        android:text="Семинар 1"
+                        style="@style/HeaderText"
+                        android:inputType="text" />
+                    <EditText
+                        android:text="Семинар 2"
+                        style="@style/HeaderText"
+                        android:inputType="text" />
+                    <EditText
+                        android:text="Контрольная работа"
+                        style="@style/HeaderText"
+                        android:inputType="text" />
+
                 </TableRow>
-                <!--<TableRow style="@style/BodyRow">-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                    <!--<EditText-->
-                        <!--android:text="5"-->
-                        <!--style="@style/BodyText"-->
-                        <!--android:inputType="number" />-->
-                <!--</TableRow>-->
 
   <!--<TableRow style="@style/BodyRow">-->
                     <!--<EditText-->

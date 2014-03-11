@@ -22,8 +22,8 @@ public class CourseProvider {
 
     static {
         // Add 3 sample courses.
-        String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля"};
-        String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко"};
+        String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля", "Дима", "Леша", "Антон", "Иван"};
+        String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко", "Солдатик", "Лепненко", "Завайчик", "Чапман"};
         add("Курс 1");
         add("Курс 2");
         add("Курс 3");
@@ -33,7 +33,7 @@ public class CourseProvider {
             for (int i = 0; i < 5; i++) {
                 int groupid = GroupProvider.addGroup(course.id, course.name.
                         charAt(course.name.length() - 1) + "0" + String.valueOf(i+1)).getId();
-                for (int j = 0; j < 3; j++) {
+                for (int j = 0; j < 15; j++) {
                     Random random = new Random();
                     StudentProvider.add(names[random.nextInt(names.length)],
                             lastNames[random.nextInt(lastNames.length)], "123", groupid);
