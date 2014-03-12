@@ -7,5 +7,19 @@
     <string name="action_group_rename">Переименовать</string>
     <string name="action_add_group">Добавить</string>
     <string name="empty_student_list">Список студентов пуст</string>
-    <string name="action_add_student">Добавить</string>
+    <string name="action_add_student">Добавить студента</string>
+    <string name="action_add_lesson">Добавить занятие</string>
+    <string name="Text_Imya">Имя</string>
+    <string name="Text_Familia">Фимилия</string>
+    <string name="Edit_Familia">Фамилия</string>
+    <string name="Edit_Imya">Имя</string>
+    <string name="Text_Otchestvo">Отчество</string>
+    <string name="Edit_Otchestvo">Отчество</string>
+    <string name="Text_Telefon_mob">Телефон</string>
+    <string name="Text_Email">email</string>
+    <string name="Edit_Email">email</string>
+    <string name="Text_Data_birthday">День рождения</string>
+    <string name="Text_Group">Группа</string>
+    <string name="Button_Save">Создать</string>
+    <string name="Button_Back">Отмена</string>
 </resources>

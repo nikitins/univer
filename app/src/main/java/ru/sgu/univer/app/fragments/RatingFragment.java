@@ -9,6 +9,8 @@ import android.support.v4.app.Fragment;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -50,19 +52,13 @@ public class RatingFragment extends Fragment {
         if (getArguments() != null) {
             groupId = getArguments().getInt(GROUP_ID_RATING_PARAM);
         }
-
-
-
+        setHasOptionsMenu(true);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-//        LinearLayout linearLayout = (LinearLayout) getActivity().findViewById(R.layout.fragment_rating);
-//        TextView textView = new TextView(getActivity());
-//        textView.setText("sdfg");
-//        linearLayout.addView(textView);
         View view = inflater.inflate(R.layout.fragment_rating, container, false);
         TableLayout tableLayout = (TableLayout) view.findViewById(R.id.rating_table_layout);
 
@@ -79,7 +75,6 @@ public class RatingFragment extends Fragment {
                 row.addView(editText);
 
             }
-
             rows.add(row);
         }
 
@@ -87,81 +82,13 @@ public class RatingFragment extends Fragment {
             tableLayout.addView(row);
         }
 
-//        table = (TableLayout) view.findViewById(R.id.rating_table_layout);
         return view;
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
-//
-//        ScrollView scrollView = new ScrollView(getActivity());
-//        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
-//        table = new TableLayout(getActivity());
-//
-//        table.setStretchAllColumns(true);
-//        table.setShrinkAllColumns(true);
-//
-//        List<TableRow> rows = new ArrayList<TableRow>();
-//        List<Student> students = StudentProvider.getStudentsByGroupId(groupId);
-//        for (Student student : students) {
-//            TableRow row = new TableRow(getActivity());
-//            TextView textView = new TextView(getActivity());
-//            textView.setText(student.toString());
-//            textView.setTypeface(Typeface.DEFAULT_BOLD);
-//
-//            EditText editText = new EditText(getActivity());
-//            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-//            editText.setTypeface(Typeface.DEFAULT_BOLD);
-//
-//            row.addView(textView);
-//            row.addView(editText);
-//            row.setGravity(Gravity.CENTER);
-//            rows.add(row);
-//        }
-//
-//        for (TableRow row : rows) {
-//            table.addView(row);
-//        }
-//
-//        horizontalScrollView.addView(table);
-//        scrollView.addView(horizontalScrollView);
-//        linearLayout.addView(scrollView);
-//        return linearLayout;
+    }
 
-
-//        LinearLayout linearLayout = new LinearLayout(getActivity());
-//        linearLayout.setOrientation(LinearLayout.VERTICAL);
-//
-//        ScrollView scrollView = new ScrollView(getActivity());
-//        HorizontalScrollView horizontalScrollView = new HorizontalScrollView(getActivity());
-//        table = new TableLayout(getActivity());
-//
-//        table.setStretchAllColumns(true);
-//        table.setShrinkAllColumns(true);
-//
-//        List<TableRow> rows = new ArrayList<TableRow>();
-//        List<Student> students = StudentProvider.getStudentsByGroupId(groupId);
-//        for (Student student : students) {
-//            TableRow row = new TableRow(getActivity());
-//            TextView textView = new TextView(getActivity());
-//            textView.setText(student.toString());
-//            textView.setTypeface(Typeface.DEFAULT_BOLD);
-//
-//            EditText editText = new EditText(getActivity());
-//            editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-//            editText.setTypeface(Typeface.DEFAULT_BOLD);
-//
-//            row.addView(textView);
-//            row.addView(editText);
-//            row.setGravity(Gravity.CENTER);
-//            rows.add(row);
-//        }
-//
-//        for (TableRow row : rows) {
-//            table.addView(row);
-//        }
-//
-//        horizontalScrollView.addView(table);
-//        scrollView.addView(horizontalScrollView);
-//        linearLayout.addView(scrollView);
-//        return linearLayout;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.rating, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

@@ -27,6 +27,7 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
     GroupFragment groupFragment;
     RatingFragment ratingFragment;
     ViewPager mViewPager;
+    int currentFragment = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,26 +46,6 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.group, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_add_student) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onFragmentInteraction(String id) {
@@ -91,11 +72,14 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 //            getItem is called to instantiate the fragment for the given page.
 //            Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
+                currentFragment = 0;
                 return groupFragment;
             }
             if (position == 1) {
+                currentFragment = 1;
                 return ratingFragment;
             }
+            currentFragment = 2;
             return PlaceholderFragment.newInstance(position + 1);
         }
 

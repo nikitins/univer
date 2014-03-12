@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -60,6 +62,7 @@ public class GroupFragment extends ListFragment {
         adapter = new ArrayAdapter<Student>(getActivity(),
                 android.R.layout.simple_list_item_1, StudentProvider.getStudentsByGroupId(groupId));
         setListAdapter(adapter);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -97,6 +100,12 @@ public class GroupFragment extends ListFragment {
             // fragment is attached to one) that an item has been selected.
             mListener.onFragmentInteraction("1");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**
