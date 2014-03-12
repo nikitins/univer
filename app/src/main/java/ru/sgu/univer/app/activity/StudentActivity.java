@@ -56,13 +56,16 @@ public class StudentActivity extends ListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_add_student) {
             Intent intent = new Intent(this, CreateStudentActivity.class);
             intent.putExtra(CreateStudentActivity.GROUP_ID_CREATE_STUDENT, groupId);
+            startActivity(intent);
+            return true;
+        }
+        if(id == R.id.action_show_rating) {
+            Intent intent = new Intent(this, RatingActivity.class);
+            intent.putExtra(RatingActivity.GROUP_ID_RATING_PARAM, groupId);
             startActivity(intent);
             return true;
         }

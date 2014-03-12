@@ -39,5 +39,7 @@
     <string name="title_activity_student">Студенты</string>
     <string name="title_activity_edit_student">Студент</string>
     <string name="Button_Student_edit">Изменить</string>
+    <string name="action_show_rating">Показать рейтинг</string>
+    <string name="title_activity_rating">RatingActivity</string>
 
 </resources>

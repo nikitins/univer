@@ -36,6 +36,10 @@
             android:name="ru.sgu.univer.app.activity.EditStudentActivity"
             android:label="@string/title_activity_edit_student" >
         </activity>
+        <activity
+            android:name="ru.sgu.univer.app.activity.RatingActivity"
+            android:label="@string/title_activity_rating" >
+        </activity>
     </application>
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />
