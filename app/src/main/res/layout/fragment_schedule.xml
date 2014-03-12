@@ -26,73 +26,74 @@
                         style="@style/HeaderText" />
                 </TableRow>
                 <TableRow style="@style/BodyRow">
-                    <TextView android:text="521 Гр \nСети Эвм"
+                    <EditText android:inputType="textMultiLine" android:text="521 Гр \nСети Эвм"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:text="\n"
+                        style="@style/BodyText"
+                        android:inputType="textMultiLine" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="123 гр \nМоделирование"
                         style="@style/BodyText" />
-                    <TextView android:text="123 гр \nМоделирование"
+                    <EditText android:inputType="textMultiLine" android:text="321 гр \nМатан"
                         style="@style/BodyText" />
-                    <TextView android:text="321 гр \nМатан"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                </TableRow>
-                <TableRow style="@style/BodyRow">
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                    <TextView android:text="321 Гр \nСети Эвм"
-                        style="@style/BodyText" />
-                    <TextView android:text="223 гр \nМоделирование"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
                 </TableRow>
                 <TableRow style="@style/BodyRow">
-                    <TextView android:text="521 Гр \nСети Эвм"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="321 Гр \nСети Эвм"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="223 гр \nМоделирование"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                </TableRow>
-                <TableRow style="@style/BodyRow">
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
-                        style="@style/BodyText" />
-                    <TextView android:text="111 гр \n Логика"
-                        style="@style/BodyText" />
-                    <TextView android:text="321 гр \nМатан"
-                        style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
                 </TableRow>
                 <TableRow style="@style/BodyRow">
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="521 Гр \nСети Эвм"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
-                    <TextView android:text="\n"
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="111 гр \n Логика"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="321 гр \nМатан"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
                         style="@style/BodyText" />
                 </TableRow>
 

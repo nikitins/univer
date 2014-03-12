@@ -5,12 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
     <style name="HeaderRow">
-        <item name="android:background">#7FAF7F</item>
+        <item name="android:background">#ff4cd8df</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
     <style name="HeaderText">
-        <item name="android:textColor">#0F7F0F</item>
+        <item name="android:textColor">#ff3253c3</item>
         <item name="android:shadowColor">#AFFFFFFF</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>
