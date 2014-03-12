@@ -28,6 +28,14 @@
             android:name="ru.sgu.univer.app.activity.CreateStudentActivity"
             android:label="@string/title_activity_create_student" >
         </activity>
+        <activity
+            android:name="ru.sgu.univer.app.activity.StudentActivity"
+            android:label="@string/title_activity_student" >
+        </activity>
+        <activity
+            android:name="ru.sgu.univer.app.activity.EditStudentActivity"
+            android:label="@string/title_activity_edit_student" >
+        </activity>
     </application>
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />

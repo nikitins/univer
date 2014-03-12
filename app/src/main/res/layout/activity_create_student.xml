@@ -5,7 +5,7 @@
         <Button android:id="@+id/Button_Back_to_Edit_group" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="@string/Button_Back" android:layout_weight="1.0" >
             <requestFocus />
         </Button>
-        <Button android:id="@+id/Button_Save_student" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="@string/Button_Save" android:layout_weight="1.0"  />
+        <Button android:id="@+id/Button_Save_student" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="@string/Button_Save" android:layout_weight="1.0"  android:onClick="saveStudent"/>
     </LinearLayout>
     <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@id/Button_Back_to_Edit_group_and_Button_Add_Student" android:layout_alignParentTop="true">
         <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
@@ -25,10 +25,8 @@
             <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
                 <EditText android:id="@+id/Edit_Email" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Email" android:maxLines="5" android:inputType="textEmailAddress" android:isScrollContainer="true"  />
             </LinearLayout>
-            <TextView android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/Text_Data_birthday"  />
-            <TextView android:gravity="center_horizontal" android:id="@+id/Text_Data_birthday_data" android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="" />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Text_Group"  />
-            <Spinner android:id="@+id/Spinner_group" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+            <TextView android:id="@+id/edit_student_group" android:layout_width="fill_parent" android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

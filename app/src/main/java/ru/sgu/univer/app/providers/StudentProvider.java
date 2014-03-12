@@ -18,14 +18,38 @@ public class StudentProvider {
         return uid++;
     }
 
-    public static Student add(String name, String lastName, String secondName, int groupId) {
-        Student student = new Student(getUid(), name, secondName, lastName, groupId);
+    public static Student add(String name, String lastName, String secondName, String tel, String email, int groupId) {
+        Student student = new Student(getUid(), name, secondName, lastName, tel, email, groupId);
         if(!studentsMap.containsKey(groupId)) {
             studentsMap.put(groupId, new ArrayList<Student>());
         }
         studentsMap.get(groupId).add(student);
         students.add(student);
         return student;
+    }
+
+    public static Student edit(int id, String name, String lastName, String secondName, String tel, String email, int groupId) {
+        for (Student student : students) {
+            if(student.getId() == id) {
+                student.name = name;
+                student.lastname = lastName;
+                student.surname = secondName;
+                student.telefon = tel;
+                student.email = email;
+                break;
+            }
+        }
+        for (Student student : studentsMap.get(groupId)) {
+            if(student.getId() == id) {
+                student.name = name;
+                student.lastname = lastName;
+                student.surname = secondName;
+                student.telefon = tel;
+                student.email = email;
+                return student;
+            }
+        }
+        return null;
     }
 
     public static List<Student> getStudentsByGroupId(int groupId) {

@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Group;
+import ru.sgu.univer.app.objects.Student;
 import ru.sgu.univer.app.providers.GroupProvider;
 import ru.sgu.univer.app.providers.StudentProvider;
 
@@ -54,8 +55,8 @@ public class GroupListActivity extends ListActivity {
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
-        Intent intent = new Intent(this, GroupActivity.class);
-        intent.putExtra(GroupActivity.GROUP_ID_EXTRA, adapter.getItem(position).getId());
+        Intent intent = new Intent(this, StudentActivity.class);
+        intent.putExtra(StudentActivity.GROUP_ID_PARAM, adapter.getItem(position).getId());
         startActivity(intent);
     }
 

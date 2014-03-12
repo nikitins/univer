@@ -49,7 +49,6 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 
     @Override
     public void onFragmentInteraction(String id) {
-        //TODO
     }
 
     @Override

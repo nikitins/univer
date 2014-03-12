@@ -21,7 +21,6 @@ public class CourseProvider {
     private static int uid = 0;
 
     static {
-        // Add 3 sample courses.
         String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля", "Дима", "Леша", "Антон", "Иван"};
         String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко", "Солдатик", "Лепненко", "Завайчик", "Чапман"};
         add("Курс 1");
@@ -36,7 +35,8 @@ public class CourseProvider {
                 for (int j = 0; j < 12; j++) {
                     Random random = new Random();
                     StudentProvider.add(names[random.nextInt(names.length)],
-                            lastNames[random.nextInt(lastNames.length)], "123", groupid);
+                            lastNames[random.nextInt(lastNames.length)], "ivan", "555555",
+                            "email@gmail.com",  groupid);
                 }
 
             }

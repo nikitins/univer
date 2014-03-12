@@ -27,8 +27,6 @@ import ru.sgu.univer.app.providers.StudentProvider;
  */
 public class GroupFragment extends ListFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String GROUP_ID_PARAM = "group_id_param";
     private int groupId;
 

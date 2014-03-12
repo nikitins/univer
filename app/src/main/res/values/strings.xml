@@ -24,7 +24,7 @@
     <string name="action_add_lesson">Добавить занятие</string>
     <string name="title_activity_create_student">CreateStudentActivity</string>
     <string name="Text_Imya">Имя</string>
-    <string name="Text_Familia">Фимилия</string>
+    <string name="Text_Familia">Фамилия</string>
     <string name="Edit_Familia">Фамилия</string>
     <string name="Edit_Imya">Имя</string>
     <string name="Text_Otchestvo">Отчество</string>
@@ -36,5 +36,8 @@
     <string name="Text_Group">Группа</string>
     <string name="Button_Save">Создать</string>
     <string name="Button_Back">Отмена</string>
+    <string name="title_activity_student">Студенты</string>
+    <string name="title_activity_edit_student">Студент</string>
+    <string name="Button_Student_edit">Изменить</string>
 
 </resources>

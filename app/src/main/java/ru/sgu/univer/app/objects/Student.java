@@ -2,17 +2,21 @@ package ru.sgu.univer.app.objects;
 
 public class Student {
 
-    private int id;
-    private String name;
-    private String surname;
-    private String lastname;
-    private int groupId;
+    public int id;
+    public String name;
+    public String surname;
+    public String lastname;
+    public String telefon;
+    public  String email;
+    public int groupId;
 
-    public Student(int id, String name, String surname, String lastname, int groupId) {
+    public Student(int id, String name, String surname, String lastname, String telefon, String email, int groupId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;
+        this.telefon = telefon;
+        this.email = email;
         this.groupId = groupId;
     }
 
