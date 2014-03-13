@@ -12,26 +12,26 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content">
                 <TableRow style="@style/HeaderRow" android:id="@+id/table_head">
-                    <EditText
+                    <TextView
                         android:text="Имя"
                         style="@style/HeaderText"
-                        android:inputType="text" />
-                    <EditText
+                         />
+                    <TextView
                         android:text="Лекция 1"
                         style="@style/HeaderText"
-                        android:inputType="text" />
-                    <EditText
+                         />
+                    <TextView
                         android:text="Семинар 1"
                         style="@style/HeaderText"
-                        android:inputType="text" />
-                    <EditText
+                         />
+                    <TextView
                         android:text="Семинар 2"
                         style="@style/HeaderText"
-                        android:inputType="text" />
-                    <EditText
+                         />
+                    <TextView
                         android:text="Контрольная работа"
                         style="@style/HeaderText"
-                        android:inputType="text" />
+                         />
 
                 </TableRow>
 

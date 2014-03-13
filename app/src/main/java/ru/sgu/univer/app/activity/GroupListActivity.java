@@ -11,31 +11,29 @@ import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Group;
-import ru.sgu.univer.app.objects.Student;
 import ru.sgu.univer.app.providers.GroupProvider;
+import ru.sgu.univer.app.providers.RatingProvider;
 import ru.sgu.univer.app.providers.StudentProvider;
 
 public class GroupListActivity extends ListActivity {
     public static final String COURSE_ID_EXTRA = "course_id_extra";
     private ArrayAdapter<Group> adapter;
-    private int groupId;
+    private int courseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        groupId = getIntent().getIntExtra(COURSE_ID_EXTRA, 0);
+        courseId = getIntent().getIntExtra(COURSE_ID_EXTRA, 0);
         setContentView(R.layout.activity_group_list);
-        adapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, GroupProvider.getGroupsByCourseId(groupId));
+        adapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, GroupProvider.getGroupsByCourseId(courseId));
         setListAdapter(adapter);
     }
 
@@ -57,6 +55,7 @@ public class GroupListActivity extends ListActivity {
     protected void onListItemClick(ListView l, View v, int position, long id) {
         Intent intent = new Intent(this, StudentActivity.class);
         intent.putExtra(StudentActivity.GROUP_ID_PARAM, adapter.getItem(position).getId());
+        intent.putExtra(COURSE_ID_EXTRA, courseId);
         startActivity(intent);
     }
 
@@ -176,7 +175,8 @@ public class GroupListActivity extends ListActivity {
                             dialog.dismiss();
                             return;
                         }
-                        GroupProvider.addGroup(groupId, name);
+                        int groupId = GroupProvider.addGroup(courseId, name).getId();
+                        RatingProvider.add(courseId, groupId);
                         adapter.notifyDataSetChanged();
                     }
 

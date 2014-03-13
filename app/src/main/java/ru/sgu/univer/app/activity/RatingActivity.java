@@ -21,7 +21,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import ru.sgu.univer.app.R;
@@ -34,16 +36,25 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
     public static final String GROUP_ID_RATING_PARAM = "group_id_rating_param";
 
     private int groupId;
+    private int courseId;
     private TableLayout table;
+    private TableRow tableHead;
+    private Map<Integer, TableRow> rowMap = new HashMap<Integer, TableRow>();
+    private Map<Integer, TextView> sumMap = new HashMap<Integer, TextView>();
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         groupId = getIntent().getIntExtra(GROUP_ID_RATING_PARAM, 0);
+        courseId = getIntent().getIntExtra(GroupListActivity.COURSE_ID_EXTRA, 0);
         setContentView(R.layout.fragment_rating);
 
-        TableLayout tableLayout = (TableLayout) findViewById(R.id.rating_table_layout);
+        table = (TableLayout) findViewById(R.id.rating_table_layout);
+        tableHead = (TableRow) findViewById(R.id.table_head);
+        TextView sumHead = (TextView) getLayoutInflater().inflate(R.layout.head_table_cell, null);
+        sumHead.setText("Сумма");
+        tableHead.addView(sumHead);
 
         List<TableRow> rows = new ArrayList<TableRow>();
         List<Student> students = StudentProvider.getStudentsByGroupId(groupId);
@@ -54,17 +65,34 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
             textView.setText(student.toString());
             for (int i = 0; i < 4; i++) {
                 TextView editText = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
-                editText.setText(String.valueOf(new Random().nextInt(7)));
+                int num = new Random().nextInt(7);
+                editText.setText(String.valueOf(num));
                 editText.setOnClickListener(this);
                 row.addView(editText);
             }
+            TextView sumText = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
+            sumText.setText("0");
+            sumMap.put(student.id, sumText);
+            row.addView(sumText);
+
+            rowMap.put(student.id, row);
             rows.add(row);
         }
 
         for (TableRow row : rows) {
-            tableLayout.addView(row);
+            table.addView(row);
         }
 
+    }
+
+    public void addColumn(String name) {
+        TextView headView = (TextView) getLayoutInflater().inflate(R.layout.head_table_cell, null);
+        headView.setText(name);
+        tableHead.addView(headView, tableHead.getChildCount() - 1);
+        for (Map.Entry<Integer, TableRow> entry : rowMap.entrySet()) {
+            TextView textView = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
+            entry.getValue().addView(textView, entry.getValue().getChildCount() - 1);
+        }
     }
 
 
@@ -92,15 +120,22 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
                 dialog.dismiss();
             }
         });
-//        builder.setNegativeButton("Отмена",
-//                new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialog,
-//                                        int which) {
-//                        dialog.cancel();
-//                    }
-//                });
         builder.show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.rating, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_add_column) {
+            addColumn("name");
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void showMessage(String message) {

@@ -28,12 +28,14 @@ import ru.sgu.univer.app.providers.StudentProvider;
 public class StudentActivity extends ListActivity {
     public static final String GROUP_ID_PARAM = "group_id__student_param";
     private int groupId;
+    private int courseId;
     public ArrayAdapter<Student> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         groupId = getIntent().getIntExtra(GROUP_ID_PARAM, 0);
+        courseId = getIntent().getIntExtra(GroupListActivity.COURSE_ID_EXTRA, 0);
         setContentView(R.layout.activity_student);
         adapter = new ArrayAdapter<Student>(this, android.R.layout.simple_list_item_1, StudentProvider.getStudentsByGroupId(groupId));
         setListAdapter(adapter);
@@ -66,6 +68,7 @@ public class StudentActivity extends ListActivity {
         if(id == R.id.action_show_rating) {
             Intent intent = new Intent(this, RatingActivity.class);
             intent.putExtra(RatingActivity.GROUP_ID_RATING_PARAM, groupId);
+            intent.putExtra(GroupListActivity.COURSE_ID_EXTRA, courseId);
             startActivity(intent);
             return true;
         }

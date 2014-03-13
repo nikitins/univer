@@ -24,4 +24,5 @@
     <string name="Button_Back">Отмена</string>
     <string name="Button_Student_edit">Изменить</string>
     <string name="action_show_rating">Показать рейтинг</string>
+    <string name="action_add_column">Добавить занятие</string>
 </resources>
