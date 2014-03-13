@@ -1,7 +1,5 @@
 package ru.sgu.univer.app.objects;
 
-import android.util.SparseArray;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,33 +8,56 @@ import java.util.Map;
 import ru.sgu.univer.app.providers.LessonTypeProvider;
 
 public class RatingTable {
-    public static List<Lesson> lessons = new ArrayList<Lesson>();
-    public static Map<Integer, List<Integer>> rating = new HashMap<Integer, List<Integer>>();
+    public List<Lesson> lessons = new ArrayList<Lesson>();
+    public Map<Integer, List<Integer>> rating = new HashMap<Integer, List<Integer>>();
+    public Map<Integer, Integer> sumMap = new HashMap<Integer, Integer>();
 
     public RatingTable(List<Student> students) {
         for (Student student : students) {
             rating.put(student.id, new ArrayList<Integer>());
+            sumMap.put(student.id, 0);
         }
     }
 
-    public static void put(int studentId, int pos, int ball) {
+    public void put(int studentId, int pos, int ball) {
         if(rating.containsKey(studentId)) {
-            rating.get(studentId).set(pos, ball);
+            int dif = 0;
+            if(pos == -1) {
+                rating.get(studentId).add(ball);
+            } else {
+                dif = rating.get(studentId).get(pos);
+                rating.get(studentId).set(pos, ball);
+            }
+            if(ball > 0) {
+                sumMap.put(studentId, sumMap.get(studentId) - dif + ball);
+            }
         }
     }
 
-    public static void addColumn(int typeId, String date) {
+    public String getColumnTitle(int pos) {
+        return lessons.get(pos).toString();
+    }
+
+    public void addColumn(int typeId, String date) {
         Lesson lesson = new Lesson(LessonTypeProvider.getById(typeId), date);
         lessons.add(lesson);
         for (List<Integer> integers : rating.values()) {
-            integers.add(0);
+            integers.add(-2);
         }
     }
 
-    public static List<Integer> getRatingByStudentId(int id) {
-        if(rating.containsKey(id)) {
-            return rating.get(id);
+    public List<Integer> getRatingByStudentId(int id) {
+        if(!rating.containsKey(id)) {
+            rating.put(id, new ArrayList<Integer>());
         }
-        return new ArrayList<Integer>();
+        return rating.get(id);
     }
+
+    public int getSumStudentId(int id) {
+        if(!sumMap.containsKey(id)) {
+            sumMap.put(id, 0);
+        }
+        return sumMap.get(id);
+    }
+
 }

@@ -7,6 +7,7 @@ import ru.sgu.univer.app.objects.LessonType;
 
 public class LessonTypeProvider {
     private static int uid = 0;
+    public static List<LessonType> lessonTypes = new ArrayList<LessonType>();
 
     static {
         add("Лекция");
@@ -14,8 +15,6 @@ public class LessonTypeProvider {
         add("Контрольная");
         add("Лабораторная");
     }
-
-    public static List<LessonType> lessonTypes = new ArrayList<LessonType>();
 
     public static LessonType getById(int id) {
         for (LessonType lessonType : lessonTypes) {

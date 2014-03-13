@@ -23,16 +23,14 @@ public class CourseProvider {
     static {
         String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля", "Дима", "Леша", "Антон", "Иван"};
         String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко", "Солдатик", "Лепненко", "Завайчик", "Чапман"};
-        add("Курс 1");
-        add("Курс 2");
-        add("Курс 3");
-        add("Курс 4");
-        add("Курс 5");
-        for (Course course : courses) {
+        add("Матан");
+        add("Сети ЭВМ");
+        add("Прошраммирование");
+        for(int q = 0; q < courses.size(); q++) {
+            Course course = courses.get(q);
             for (int i = 0; i < 5; i++) {
-                int groupid = GroupProvider.addGroup(course.id, course.name.
-                        charAt(course.name.length() - 1) + "0" + String.valueOf(i+1)).getId();
-                for (int j = 0; j < 12; j++) {
+                int groupid = GroupProvider.addGroup(course.id,  String.valueOf(q) + "0" + String.valueOf(i+1)).getId();
+                for (int j = 0; j < 5; j++) {
                     Random random = new Random();
                     StudentProvider.add(names[random.nextInt(names.length)],
                             lastNames[random.nextInt(lastNames.length)], "ivan", "555555",

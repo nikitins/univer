@@ -7,9 +7,6 @@ import java.util.Map;
 
 import ru.sgu.univer.app.objects.RatingTable;
 
-/**
- * Created by NIK on 13.03.14.
- */
 public class RatingProvider {
     public static Map<Integer, Map<Integer, RatingTable>> map = new HashMap<Integer, Map<Integer, RatingTable>>();
 

@@ -42,5 +42,8 @@
     <string name="action_show_rating">Показать рейтинг</string>
     <string name="title_activity_rating">RatingActivity</string>
     <string name="action_add_column">Добавить занятие</string>
+    <string name="data_string_event">Дата занятия</string>
+    <string name="event_type_string">Тип занятия</string>
+    <string name="add_event_button_string">Добавить</string>
 
 </resources>
