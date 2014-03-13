@@ -25,7 +25,7 @@ public class CourseProvider {
         String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко", "Солдатик", "Лепненко", "Завайчик", "Чапман"};
         add("Матан");
         add("Сети ЭВМ");
-        add("Прошраммирование");
+        add("Программирование");
         for(int q = 0; q < courses.size(); q++) {
             Course course = courses.get(q);
             for (int i = 0; i < 5; i++) {

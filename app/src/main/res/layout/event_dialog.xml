@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/data_event_textView"
         android:layout_gravity="center_horizontal" />
 
@@ -41,7 +41,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/add_event_button_string"
+            android:text="@string/add_event_button_string2"
             android:id="@+id/add_event_button"
             android:layout_weight="0.27" />
     </LinearLayout>

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,6 +33,7 @@ import ru.sgu.univer.app.objects.RatingTable;
 import ru.sgu.univer.app.objects.Student;
 import ru.sgu.univer.app.providers.CourseProvider;
 import ru.sgu.univer.app.providers.LessonTypeProvider;
+import ru.sgu.univer.app.providers.PerevodProvider;
 import ru.sgu.univer.app.providers.RatingProvider;
 import ru.sgu.univer.app.providers.StudentProvider;
 
@@ -44,6 +46,7 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
     private TableRow tableHead;
     private Map<Integer, TableRow> rowMap = new HashMap<Integer, TableRow>();
     private Map<Integer, TextView> sumMap = new HashMap<Integer, TextView>();
+    private Map<Integer, TextView> oMap = new HashMap<Integer, TextView>();
     public static Map<TextView, Integer> viewStudentMap = new HashMap<TextView, Integer>();
     public static Map<TextView, Integer> viewColMap = new HashMap<TextView, Integer>();
     private int DATA_DIALOG_ID = 1;
@@ -77,6 +80,7 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
         }
 
 
+
         for(int i = 0; i < students.size(); i++) {
             Student student = students.get(i);
 
@@ -107,6 +111,13 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
             sumMap.put(student.id, sumText);
             row.addView(sumText);
 
+            TextView oText = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
+            oText.setText(String.valueOf(PerevodProvider.getOchen(rating.getSumStudentId(student.id))));
+            oMap.put(student.id, oText);
+            row.addView(oText);
+
+
+
             rowMap.put(student.id, row);
             rows.add(row);
         }
@@ -114,6 +125,10 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
         TextView sumHead = (TextView) getLayoutInflater().inflate(R.layout.head_table_cell, null);
         sumHead.setText("Сумма");
         tableHead.addView(sumHead);
+
+        TextView ocheHead = (TextView) getLayoutInflater().inflate(R.layout.head_table_cell, null);
+        ocheHead.setText("Оценка");
+        tableHead.addView(ocheHead);
 
         for (TableRow row : rows) {
             table.addView(row);
@@ -127,13 +142,13 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
         headView.setText(type.toString() + " " + date);
         rating.addColumn(type.id, date);
 
-        tableHead.addView(headView, tableHead.getChildCount() - 1);
+        tableHead.addView(headView, tableHead.getChildCount() - 2);
         for (Map.Entry<Integer, TableRow> entry : rowMap.entrySet()) {
             TextView textView = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
             textView.setOnClickListener(this);
             viewStudentMap.put(textView, entry.getKey());
             viewColMap.put(textView, rating.lessons.size() - 1);
-            entry.getValue().addView(textView, entry.getValue().getChildCount() - 1);
+            entry.getValue().addView(textView, entry.getValue().getChildCount() - 2);
         }
     }
 
@@ -151,7 +166,6 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         ((TextView) v).setText(input.getText().toString());
-                        rating.put(1,0,4);
                         TextView tv = (TextView)v;
                         int id = viewStudentMap.get(tv);
                         int pos = viewColMap.get(tv);
@@ -181,6 +195,9 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
     }
 
     public void refreshSum() {
+        for (Map.Entry<Integer, TextView> entry : oMap.entrySet()) {
+            entry.getValue().setText(String.valueOf(PerevodProvider.getOchen(rating.getSumStudentId(entry.getKey()))));
+        }
         for (Map.Entry<Integer, TextView> entry : sumMap.entrySet()) {
             entry.getValue().setText(String.valueOf(rating.getSumStudentId(entry.getKey())));
         }
@@ -203,11 +220,23 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
             dateTextView.setText(dataString);
 
             final Spinner spinner = (Spinner) linearLayout.findViewById(R.id.add_event_spinner);
-            ArrayAdapter<LessonType> dataAdapter = new ArrayAdapter<LessonType>(this,
+            final ArrayAdapter<LessonType> dataAdapter = new ArrayAdapter<LessonType>(this,
                     android.R.layout.simple_spinner_item, LessonTypeProvider.lessonTypes);
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(dataAdapter);
 
+            Button button = (Button) linearLayout.findViewById(R.id.add_event_button);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    EditText editText = (EditText) linearLayout.findViewById(R.id.add_event_editText);
+                    String s = editText.getText().toString();
+                    LessonTypeProvider.add(s);
+                    editText.setText("");
+                    dataAdapter.notifyDataSetChanged();
+                    showMessage(s + " добавлен");
+                }
+            });
             builder.setView(linearLayout);
 
             builder.setPositiveButton("Добавить",
@@ -233,6 +262,43 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
 
 
 
+            return true;
+        }
+        if(item.getItemId() == R.id.action_prop) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("Настроить перевод баллов");
+            final LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.properties_view, null);
+            final EditText edit2 = (EditText) linearLayout.findViewById(R.id.editbal2);
+            final EditText edit3 = (EditText) linearLayout.findViewById(R.id.editbal3);
+            final EditText edit4 = (EditText) linearLayout.findViewById(R.id.editbal4);
+            final EditText edit5 = (EditText) linearLayout.findViewById(R.id.editbal5);
+            edit2.setText(String.valueOf(PerevodProvider.two));
+            edit3.setText(String.valueOf(PerevodProvider.three));
+            edit4.setText(String.valueOf(PerevodProvider.four));
+            edit5.setText(String.valueOf(PerevodProvider.five));
+            builder.setView(linearLayout);
+            builder.setPositiveButton("Ок",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                            PerevodProvider.two = Integer.valueOf(edit2.getText().toString());
+                            PerevodProvider.three = Integer.valueOf(edit3.getText().toString());
+                            PerevodProvider.four = Integer.valueOf(edit4.getText().toString());
+                            PerevodProvider.five = Integer.valueOf(edit5.getText().toString());
+                            refreshSum();
+                            dialog.dismiss();
+                        }
+                    });
+            builder.setNegativeButton("Отмена",
+                    new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog,
+                                            int which) {
+                            dialog.cancel();
+                        }
+                    });
+            builder.show();
             return true;
         }
         return super.onOptionsItemSelected(item);

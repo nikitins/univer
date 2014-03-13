@@ -45,5 +45,8 @@
     <string name="data_string_event">Дата занятия</string>
     <string name="event_type_string">Тип занятия</string>
     <string name="add_event_button_string">Добавить</string>
+    <string name="add_event_button_string2">Создать</string>
+    <string name="bal1">Количество баллов, соответствующее оценка 2</string>
+    <string name="action_prop">Настроить БАРС</string>
 
 </resources>

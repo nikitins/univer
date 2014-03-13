@@ -25,11 +25,12 @@ public class RatingTable {
             if(pos == -1) {
                 rating.get(studentId).add(ball);
             } else {
-                dif = rating.get(studentId).get(pos);
+                dif = Math.max(rating.get(studentId).get(pos), 0);
                 rating.get(studentId).set(pos, ball);
             }
+            sumMap.put(studentId, sumMap.get(studentId) - dif);
             if(ball > 0) {
-                sumMap.put(studentId, sumMap.get(studentId) - dif + ball);
+                sumMap.put(studentId, sumMap.get(studentId) + ball);
             }
         }
     }
