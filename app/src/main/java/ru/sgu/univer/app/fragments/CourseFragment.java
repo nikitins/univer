@@ -1,16 +1,23 @@
 package ru.sgu.univer.app.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Course;
@@ -46,6 +53,7 @@ public class CourseFragment extends ListFragment{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -65,6 +73,62 @@ public class CourseFragment extends ListFragment{
 
         mListView.setOnCreateContextMenuListener(getActivity());
         return view;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        getActivity().getMenuInflater().inflate(R.menu.main, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        switch (id) {
+            case R.id.action_add_course: {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setMessage("Введите имя");
+                builder.setCancelable(false);
+                final EditText input = new EditText(getActivity());
+                builder.setView(input);
+                builder.setPositiveButton("Добавить",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                String name = input.getText().toString();
+                                if("".equals(name)) {
+                                    showMessage("Имя не может быть пустым.");
+                                    dialog.dismiss();
+                                    return;
+                                }
+                                if(CourseProvider.hasCourse(name)) {
+                                    showMessage("Имя " + name + " уже зенято.");
+                                    dialog.dismiss();
+                                    return;
+                                }
+                                addCourse(name);
+                            }
+
+                        });
+                builder.setNegativeButton("Отмена",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
+                return true;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(getActivity().getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
     }
 
     @Override

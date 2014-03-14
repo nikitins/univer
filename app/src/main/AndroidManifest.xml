@@ -40,6 +40,14 @@
             android:name="ru.sgu.univer.app.activity.RatingActivity"
             android:label="@string/title_activity_rating" >
         </activity>
+        <activity
+            android:name="ru.sgu.univer.app.activity.choActivity"
+            android:label="@string/title_activity_cho" >
+        </activity>
+        <activity
+            android:name="ru.sgu.univer.app.activity.SchActivity"
+            android:label="@string/title_activity_sch" >
+        </activity>
     </application>
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />

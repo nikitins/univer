@@ -48,5 +48,8 @@
     <string name="add_event_button_string2">Создать</string>
     <string name="bal1">Количество баллов, соответствующее оценка 2</string>
     <string name="action_prop">Настроить БАРС</string>
+    <string name="action_change">Показать нечетную неделю</string>
+    <string name="title_activity_cho">choActivity</string>
+    <string name="title_activity_sch">SchActivity</string>
 
 </resources>

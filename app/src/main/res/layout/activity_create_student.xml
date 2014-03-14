@@ -19,10 +19,12 @@
             <EditText android:id="@+id/Edit_Otchestvo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Otchestvo" android:inputType="textPersonName"  />
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Text_Telefon_mob"  />
             <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/Button_Call_mob" android:background="@drawable/call_up" android:layout_width="36.0dip" android:layout_height="36.0dip" />
                 <EditText android:id="@+id/Edit_Telefon_mob" android:layout_width="fill_parent" android:layout_height="wrap_content"  android:inputType="phone"/>
             </LinearLayout>
             <TextView android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/Text_Email"  />
             <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/Button_mail" android:background="@drawable/mail_up" android:layout_width="36.0dip" android:layout_height="36.0dip" />
                 <EditText android:id="@+id/Edit_Email" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Email" android:maxLines="5" android:inputType="textEmailAddress" android:isScrollContainer="true"  />
             </LinearLayout>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Text_Group"  />

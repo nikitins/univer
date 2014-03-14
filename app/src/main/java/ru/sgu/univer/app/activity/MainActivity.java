@@ -5,6 +5,7 @@ import java.util.Locale;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -63,25 +64,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_add_course: {
-                addCourse();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.course_context, menu);
@@ -104,42 +86,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onContextItemSelected(item);
     }
 
-    public void addCourse() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Введите имя");
-        builder.setCancelable(false);
-        final EditText input = new EditText(this);
-        builder.setView(input);
-        builder.setPositiveButton("Добавить",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        String name = input.getText().toString();
-                        if("".equals(name)) {
-                            showMessage("Имя не может быть пустым.");
-                            dialog.dismiss();
-                            return;
-                        }
-                        if(CourseProvider.hasCourse(name)) {
-                            showMessage("Имя " + name + " уже зенято.");
-                            dialog.dismiss();
-                            return;
-                        }
-                        courseFragment.addCourse(name);
-                    }
-
-                });
-        builder.setNegativeButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        dialog.cancel();
-                    }
-                });
-        builder.show();
-    }
 
     public void removeCourse(final MenuItem item) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -265,7 +211,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             Locale l = Locale.getDefault();
             switch (position) {
                 case 1:
-                    return "Рассписание";
+                    return "Расписание";
                 case 0:
                     return "Рейтинг";
             }
