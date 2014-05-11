@@ -28,4 +28,5 @@
     <string name="data_string_event">Дата занятия</string>
     <string name="add_event_button_string">Добавить</string>
     <string name="add_event_button_string2">Создать</string>
+    <string name="action_login">Войти в систему Ipsilon</string>
 </resources>

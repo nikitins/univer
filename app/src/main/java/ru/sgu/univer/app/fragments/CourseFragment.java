@@ -3,6 +3,7 @@ package ru.sgu.univer.app.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.activity.LoginActivity;
 import ru.sgu.univer.app.objects.Course;
 import ru.sgu.univer.app.providers.CourseProvider;
 import ru.sgu.univer.app.providers.GroupProvider;
@@ -121,6 +123,10 @@ public class CourseFragment extends ListFragment{
                         });
                 builder.show();
                 return true;
+            }
+            case R.id.action_login: {
+                Intent intent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(intent);
             }
         }
         return super.onOptionsItemSelected(item);

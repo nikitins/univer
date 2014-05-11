@@ -48,6 +48,11 @@
             android:name="ru.sgu.univer.app.activity.SchActivity"
             android:label="@string/title_activity_sch" >
         </activity>
+        <activity
+            android:name="ru.sgu.univer.app.activity.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:windowSoftInputMode="adjustResize|stateVisible" >
+        </activity>
     </application>
     <!-- To access Google+ APIs: -->
     <uses-permission android:name="android.permission.INTERNET" />

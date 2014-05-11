@@ -51,5 +51,6 @@
     <string name="action_change">Показать нечетную неделю</string>
     <string name="title_activity_cho">choActivity</string>
     <string name="title_activity_sch">SchActivity</string>
+    <string name="action_login">Войти в систему Ipsilon</string>
 
 </resources>
