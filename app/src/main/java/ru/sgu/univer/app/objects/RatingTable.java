@@ -1,5 +1,6 @@
 package ru.sgu.univer.app.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.Map;
 
 import ru.sgu.univer.app.providers.LessonTypeProvider;
 
-public class RatingTable {
+public class RatingTable implements Serializable {
     public List<Lesson> lessons = new ArrayList<Lesson>();
     public Map<Integer, List<Integer>> rating = new HashMap<Integer, List<Integer>>();
     public Map<Integer, Integer> sumMap = new HashMap<Integer, Integer>();
@@ -25,7 +26,8 @@ public class RatingTable {
             if(pos == -1) {
                 rating.get(studentId).add(ball);
             } else {
-                dif = Math.max(rating.get(studentId).get(pos), 0);
+                List<Integer> marks = rating.get(studentId);
+                dif = Math.max(marks.get(pos), 0);
                 rating.get(studentId).set(pos, ball);
             }
             sumMap.put(studentId, sumMap.get(studentId) - dif);

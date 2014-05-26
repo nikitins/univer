@@ -1,11 +1,12 @@
 package ru.sgu.univer.app.objects;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Group {
+public class Group implements Serializable {
     private int id;
     private String name;
     private int courseId;
@@ -41,7 +42,7 @@ public class Group {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null) return false;
 
         Group group = (Group) o;
 

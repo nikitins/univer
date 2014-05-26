@@ -10,9 +10,9 @@ import ru.sgu.univer.app.objects.Group;
 
 public class GroupProvider {
 
-    private static List<Group> groups = new ArrayList<Group>();
-    private static Map<Integer, List<Group>> groupMap = new HashMap<Integer, List<Group>>();
-    private static int uid = 0;
+    public static List<Group> groups = new ArrayList<Group>();
+    public static Map<Integer, List<Group>> groupMap = new HashMap<Integer, List<Group>>();
+    public static int uid = 0;
 
     public static Group getGroupById(int id) {
         for (Group group : groups) {
@@ -75,5 +75,11 @@ public class GroupProvider {
             }
         }
         return false;
+    }
+
+    public static void clear(){
+        groups.clear();
+        groupMap.clear();
+        uid = 0;
     }
 }

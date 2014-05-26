@@ -29,4 +29,12 @@
     <string name="add_event_button_string">Добавить</string>
     <string name="add_event_button_string2">Создать</string>
     <string name="action_login">Войти в систему Ipsilon</string>
+    <string name="action_export">Экспортировать в Excel</string>
+    <string name="action_import">Импортировать из Excel</string>
+    <string name="action_backup">Создать резервную копию БД</string>
+    <string name="action_restore">Восстановить данные БД</string>
+    <string name="empty_directory">Список пуст</string>
+    <string name="action_chouse_dir">Выбрать</string>
+    <string name="action_clear">Очистить базу данных</string>
+    <string name="empty_dis_list">Список дисциплин</string>
 </resources>

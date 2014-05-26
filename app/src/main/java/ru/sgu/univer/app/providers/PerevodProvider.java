@@ -16,4 +16,11 @@ public class PerevodProvider {
         if (bal < five) return 4;
         return 5;
     }
+
+    public static void clear() {
+        two = 10;
+        three = 20;
+        four = 30;
+        five = 40;
+    }
 }

@@ -10,9 +10,9 @@ import ru.sgu.univer.app.objects.Student;
 
 public class StudentProvider {
 
-    private static List<Student> students = new ArrayList<Student>();
-    private static Map<Integer, List<Student>> studentsMap = new HashMap<Integer, List<Student>>();
-    private static int uid = 0;
+    public static List<Student> students = new ArrayList<Student>();
+    public static Map<Integer, List<Student>> studentsMap = new HashMap<Integer, List<Student>>();
+    public static int uid = 0;
 
     private static int getUid() {
         return uid++;
@@ -59,6 +59,10 @@ public class StudentProvider {
         return studentsMap.get(groupId);
     }
 
+    public static void removeStudentsByGroupId(int groupId) {
+        studentsMap.put(groupId, new ArrayList<Student>());
+    }
+
     public static Student getById(int id) {
         for (Student student : students) {
             if(student.getId() == id) {
@@ -87,5 +91,11 @@ public class StudentProvider {
         }
         students.removeAll(forRemoving);
         studentsMap.remove(groupId);
+    }
+
+    public static void clear(){
+        students.clear();
+        studentsMap.clear();
+        uid = 0;
     }
 }

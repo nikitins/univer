@@ -16,9 +16,9 @@ import ru.sgu.univer.app.objects.Course;
  */
 public class CourseProvider {
 
-    private static List<Course> courses = new ArrayList<Course>();
-    private static Map<Integer, Course> courseMap = new HashMap<Integer, Course>();
-    private static int uid = 0;
+    public static List<Course> courses = new ArrayList<Course>();
+    public static Map<Integer, Course> courseMap = new HashMap<Integer, Course>();
+    public static int uid = 0;
 
     static {
         String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля", "Дима", "Леша", "Антон", "Иван"};
@@ -85,5 +85,11 @@ public class CourseProvider {
             }
         }
         return false;
+    }
+
+    public static void clear() {
+        courses.clear();
+        courseMap.clear();
+        uid = 0;
     }
 }

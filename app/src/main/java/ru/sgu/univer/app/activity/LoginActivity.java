@@ -25,6 +25,22 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.BasicHttpEntity;
+import org.apache.http.entity.EntityTemplate;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import ru.sgu.univer.app.R;
@@ -151,7 +167,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
     }
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -297,11 +313,33 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             // TODO: attempt authentication against a network service.
 
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                DefaultHttpClient hc = new DefaultHttpClient();
+                ResponseHandler<String> res = new BasicResponseHandler();
+                HttpPost post = new HttpPost("http://requestb.in/19mv0k01");
+//                post.setHeader("Content-Type",
+//                        "application/x-www-form-urlencoded;charset=UTF-8;");
+//
+//                HttpParams params1 = new BasicHttpParams();
+//                params1.setParameter("user_login","Elay");
+//                params1.setParameter("user_password", "Zofckbd");
+//                post.setParams(params1);
+
+                HttpResponse response = hc.execute(post);
+                if (response.getStatusLine().getStatusCode() == 302) {
+                    return true;
+                } else {
+                    throw new IllegalArgumentException(response.getStatusLine().toString());
+                }
+
+
+            } catch (ClientProtocolException e) {
+                showMessage(e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                showMessage(e.getMessage());
+                e.printStackTrace();
             }
+
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
@@ -313,6 +351,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
             // TODO: register the new account here.
             return true;
+        }
+
+        private void showMessage(String message) {
+            Toast.makeText(getApplicationContext(), message,
+                    Toast.LENGTH_SHORT).show();
         }
 
         @Override

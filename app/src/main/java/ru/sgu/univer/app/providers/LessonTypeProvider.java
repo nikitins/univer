@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ru.sgu.univer.app.objects.LessonType;
+import ru.sgu.univer.app.objects.Student;
 
 public class LessonTypeProvider {
     private static int uid = 0;
@@ -19,6 +20,15 @@ public class LessonTypeProvider {
     public static LessonType getById(int id) {
         for (LessonType lessonType : lessonTypes) {
             if(lessonType.id == id) {
+                return lessonType;
+            }
+        }
+        return null;
+    }
+
+    public static LessonType getByName(String name) {
+        for (LessonType lessonType : lessonTypes) {
+            if(lessonType.name.equals(name)) {
                 return lessonType;
             }
         }

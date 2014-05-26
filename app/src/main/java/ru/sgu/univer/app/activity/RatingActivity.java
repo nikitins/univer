@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,26 +31,29 @@ import java.util.Map;
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Lesson;
 import ru.sgu.univer.app.objects.LessonType;
+import ru.sgu.univer.app.objects.OperationType;
 import ru.sgu.univer.app.objects.RatingTable;
 import ru.sgu.univer.app.objects.Student;
-import ru.sgu.univer.app.providers.CourseProvider;
 import ru.sgu.univer.app.providers.LessonTypeProvider;
 import ru.sgu.univer.app.providers.PerevodProvider;
 import ru.sgu.univer.app.providers.RatingProvider;
 import ru.sgu.univer.app.providers.StudentProvider;
+import ru.sgu.univer.app.writers.ExcelParser;
 
 public class RatingActivity extends ActionBarActivity implements View.OnClickListener {
     public static final String GROUP_ID_RATING_PARAM = "group_id_rating_param";
+    public static final String PATH_RATING_PARAM = "path_rating_param";
 
     private int groupId;
     private int courseId;
+    private int operation;
     private TableLayout table;
     private TableRow tableHead;
-    private Map<Integer, TableRow> rowMap = new HashMap<Integer, TableRow>();
-    private Map<Integer, TextView> sumMap = new HashMap<Integer, TextView>();
-    private Map<Integer, TextView> oMap = new HashMap<Integer, TextView>();
-    public static Map<TextView, Integer> viewStudentMap = new HashMap<TextView, Integer>();
-    public static Map<TextView, Integer> viewColMap = new HashMap<TextView, Integer>();
+    private Map<Integer, TableRow> rowMap;
+    private Map<Integer, TextView> sumMap;
+    private Map<Integer, TextView> oMap;
+    public static Map<TextView, Integer> viewStudentMap;
+    public static Map<TextView, Integer> viewColMap;
     private int DATA_DIALOG_ID = 1;
     private int DATA_TEXT_ID = 111;
     TextView dateTextView;
@@ -64,6 +69,48 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
 
         groupId = getIntent().getIntExtra(GROUP_ID_RATING_PARAM, 0);
         courseId = getIntent().getIntExtra(GroupListActivity.COURSE_ID_EXTRA, 0);
+        operation = getIntent().getIntExtra(BrouseActivity.OPERATION_EXTRA, -1);
+        String path = getIntent().getStringExtra(PATH_RATING_PARAM);
+
+        if (operation == OperationType.EXPORT.ordinal()) {
+            export(courseId, groupId, path);
+        }
+        if (operation == OperationType.IMPORT.ordinal()) {
+            ExcelParser.fromExcel(courseId, groupId, path);
+        }
+
+        setUp();
+    }
+
+    public void export(final int courseId, final int groupId, final String path) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Имя файла");
+        final EditText input = new EditText(this);
+//        input.setInputType(InputType.);
+        builder.setView(input);
+        builder.setPositiveButton("Ок",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        if (!"".equals(input.getText().toString())) {
+                            String name = input.getText().toString();
+                            ExcelParser.toExcel(courseId, groupId, path + "/" + name + ".xls");
+                            dialog.dismiss();
+                        }
+                    }
+                }
+        );
+        builder.show();
+    }
+
+    private void setUp() {
+        rowMap = new HashMap<Integer, TableRow>();
+        sumMap = new HashMap<Integer, TextView>();
+        oMap = new HashMap<Integer, TextView>();
+        viewStudentMap = new HashMap<TextView, Integer>();
+        viewColMap = new HashMap<TextView, Integer>();
+
         rating = RatingProvider.getById(courseId, groupId);
         setContentView(R.layout.fragment_rating);
 
@@ -80,7 +127,6 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
         }
 
 
-
         for(int i = 0; i < students.size(); i++) {
             Student student = students.get(i);
 
@@ -91,7 +137,9 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
             TextView textView = (TextView) row.getChildAt(0);
             textView.setText(student.toString());
 
-            for (Integer mark : rating.getRatingByStudentId(student.id)) {
+            for (int j = 0; j < rating.getRatingByStudentId(student.id).size(); j++) {
+
+                int mark = rating.getRatingByStudentId(student.id).get(j);
                 TextView text = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
                 String stringMark = String.valueOf(mark);
                 if(mark == -1) {
@@ -103,7 +151,7 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
                 text.setText(stringMark);
                 text.setOnClickListener(this);
                 viewStudentMap.put(text, student.id);
-                viewColMap.put(text, i);
+                viewColMap.put(text, j);
                 row.addView(text);
             }
             TextView sumText = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
@@ -133,7 +181,6 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
         for (TableRow row : rows) {
             table.addView(row);
         }
-
     }
 
     public void addColumn(String date, LessonType type) {
@@ -169,10 +216,15 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
                         TextView tv = (TextView)v;
                         int id = viewStudentMap.get(tv);
                         int pos = viewColMap.get(tv);
-                        int ball = Integer.valueOf(input.getText().toString());
-                        rating.put(id, pos, ball);
-                        refreshSum();
-                        dialog.dismiss();
+                        if (!"".equals(input.getText().toString())) {
+                            int ball = Integer.valueOf(input.getText().toString());
+                            for (Map.Entry<TextView, Integer> entry : viewColMap.entrySet()) {
+                                Log.d("LOG", "entry col map: " + entry.getKey() + ": " + entry.getValue());
+                            }
+                            rating.put(id, pos, ball);
+                            refreshSum();
+                            dialog.dismiss();
+                        }
                     }
                 }
         );
@@ -299,6 +351,32 @@ public class RatingActivity extends ActionBarActivity implements View.OnClickLis
                         }
                     });
             builder.show();
+            return true;
+        }
+
+        if(item.getItemId() == R.id.action_export) {
+
+            Intent intent = new Intent(this, BrouseActivity.class);
+            intent.putExtra(BrouseActivity.FIND_FILE_EXTRA, true);
+            intent.putExtra(BrouseActivity.FILE_END_EXTRA, "");
+            intent.putExtra(RatingActivity.GROUP_ID_RATING_PARAM, groupId);
+            intent.putExtra(GroupListActivity.COURSE_ID_EXTRA, courseId);
+            intent.putExtra(BrouseActivity.OPERATION_EXTRA, OperationType.EXPORT.ordinal());
+            startActivity(intent);
+
+//            ExcelParser.toExcel(courseId, groupId, "file4.xls");
+            return true;
+        }
+        if(item.getItemId() == R.id.action_import) {
+            Intent intent = new Intent(this, BrouseActivity.class);
+            intent.putExtra(BrouseActivity.FIND_FILE_EXTRA, true);
+            intent.putExtra(BrouseActivity.FILE_END_EXTRA, ".xls");
+            intent.putExtra(RatingActivity.GROUP_ID_RATING_PARAM, groupId);
+            intent.putExtra(GroupListActivity.COURSE_ID_EXTRA, courseId);
+            intent.putExtra(BrouseActivity.OPERATION_EXTRA, OperationType.IMPORT.ordinal());
+            startActivity(intent);
+
+
             return true;
         }
         return super.onOptionsItemSelected(item);

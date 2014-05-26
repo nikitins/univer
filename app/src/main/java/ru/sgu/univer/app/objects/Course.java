@@ -1,6 +1,8 @@
 package ru.sgu.univer.app.objects;
 
-public class Course {
+import java.io.Serializable;
+
+public class Course implements Serializable {
     public int id;
     public String name;
 
@@ -12,7 +14,7 @@ public class Course {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (o == null) return false;
 
         Course course = (Course) o;
 

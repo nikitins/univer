@@ -52,5 +52,14 @@
     <string name="title_activity_cho">choActivity</string>
     <string name="title_activity_sch">SchActivity</string>
     <string name="action_login">Войти в систему Ipsilon</string>
+    <string name="action_export">Экспортировать в Excel</string>
+    <string name="action_import">Импортировать из Excel</string>
+    <string name="action_backup">Создать резервную копию БД</string>
+    <string name="action_restore">Восстановить данные БД</string>
+    <string name="title_activity_brouse">BrouseActivity</string>
+    <string name="empty_directory">Список пуст</string>
+    <string name="action_chouse_dir">Выбрать</string>
+    <string name="action_clear">Очистить базу данных</string>
+    <string name="empty_dis_list">Список дисциплин</string>
 
 </resources>

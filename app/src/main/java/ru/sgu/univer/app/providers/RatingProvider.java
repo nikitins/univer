@@ -24,4 +24,8 @@ public class RatingProvider {
         temp.put(groupId, new RatingTable(StudentProvider.getStudentsByGroupId(groupId)));
         map.put(courseId, temp);
     }
+
+    public static void clear() {
+        map.clear();
+    }
 }

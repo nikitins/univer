@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -21,10 +22,19 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.activity.BrouseActivity;
+import ru.sgu.univer.app.activity.GroupListActivity;
 import ru.sgu.univer.app.activity.LoginActivity;
+import ru.sgu.univer.app.activity.RatingActivity;
 import ru.sgu.univer.app.objects.Course;
+import ru.sgu.univer.app.objects.OperationType;
 import ru.sgu.univer.app.providers.CourseProvider;
 import ru.sgu.univer.app.providers.GroupProvider;
+import ru.sgu.univer.app.providers.MegaProvider;
+import ru.sgu.univer.app.providers.PerevodProvider;
+import ru.sgu.univer.app.providers.RatingProvider;
+import ru.sgu.univer.app.providers.StudentProvider;
+import ru.sgu.univer.app.writers.ExcelParser;
 
 public class CourseFragment extends ListFragment{
 
@@ -40,6 +50,7 @@ public class CourseFragment extends ListFragment{
     private OnCourseFragmentItemClickListener clickListener;
     private AbsListView mListView;
     private ArrayAdapter mAdapter;
+    private int operation;
 
     // TODO: Rename and change types of parameters
     public static CourseFragment newInstance() {
@@ -64,6 +75,49 @@ public class CourseFragment extends ListFragment{
 
         mAdapter = new ArrayAdapter<Course>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, CourseProvider.getCourses());
+
+        operation = getActivity().getIntent().getIntExtra(BrouseActivity.OPERATION_EXTRA, -1);
+        String path = getActivity().getIntent().getStringExtra(RatingActivity.PATH_RATING_PARAM);
+
+        if (operation == OperationType.BACKUP.ordinal()) {
+            backUp(path);
+        }
+        if (operation == OperationType.RESTORE.ordinal()) {
+            restore(path);
+        }
+    }
+
+    private void restore(String path) {
+        MegaProvider.clearAll();
+        ExcelParser.fromBackUp(path);
+        mAdapter.notifyDataSetChanged();
+    }
+
+    private void backUp(final String path) {
+        Log.d("LOG", "Start backup");
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage("Имя файла");
+        final EditText input = new EditText(getActivity());
+//        input.setInputType(InputType.);
+        builder.setView(input);
+        builder.setPositiveButton("Ок",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog,
+                                        int which) {
+                        Log.d("LOG", "start to dialog to back up");
+                        if (!"".equals(input.getText().toString())) {
+                            String name = input.getText().toString();
+                            Log.d("LOG", "back up to " + name);
+                            ExcelParser.toBackUp(path + "/" + name + ".backup");
+                            Log.d("LOG", "back end");
+                            showMessage("Backup сохранен в " + name + ".backup");
+                            dialog.dismiss();
+                        }
+                    }
+                }
+        );
+        builder.show();
     }
 
     @Override
@@ -127,6 +181,31 @@ public class CourseFragment extends ListFragment{
             case R.id.action_login: {
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+                return true;
+            }
+            case R.id.action_clear: {
+                MegaProvider.clearAll();
+                mAdapter.notifyDataSetChanged();
+                showMessage("База Данных очищена");
+                return true;
+            }
+            case R.id.action_backup: {
+                Intent intent = new Intent(getActivity(), BrouseActivity.class);
+                intent.putExtra(BrouseActivity.FIND_FILE_EXTRA, false);
+                intent.putExtra(BrouseActivity.FILE_END_EXTRA, "");
+//                intent.putExtra(RatingActivity.GROUP_ID_RATING_PARAM, groupId);
+//                intent.putExtra(GroupListActivity.COURSE_ID_EXTRA, courseId);
+                intent.putExtra(BrouseActivity.OPERATION_EXTRA, OperationType.BACKUP.ordinal());
+                startActivity(intent);
+                return true;
+            }
+            case R.id.action_restore: {
+                Intent intent = new Intent(getActivity(), BrouseActivity.class);
+                intent.putExtra(BrouseActivity.FIND_FILE_EXTRA, true);
+                intent.putExtra(BrouseActivity.FILE_END_EXTRA, ".backup");
+                intent.putExtra(BrouseActivity.OPERATION_EXTRA, OperationType.RESTORE.ordinal());
+                startActivity(intent);
+                return true;
             }
         }
         return super.onOptionsItemSelected(item);
