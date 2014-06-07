@@ -26,6 +26,7 @@ import ru.sgu.univer.app.activity.BrouseActivity;
 import ru.sgu.univer.app.activity.GroupListActivity;
 import ru.sgu.univer.app.activity.LoginActivity;
 import ru.sgu.univer.app.activity.RatingActivity;
+import ru.sgu.univer.app.activity.SyncGroupListActivity;
 import ru.sgu.univer.app.objects.Course;
 import ru.sgu.univer.app.objects.OperationType;
 import ru.sgu.univer.app.providers.CourseProvider;
@@ -179,8 +180,13 @@ public class CourseFragment extends ListFragment{
                 return true;
             }
             case R.id.action_login: {
-                Intent intent = new Intent(getActivity(), LoginActivity.class);
-                startActivity(intent);
+                if(CourseProvider.logged){
+                    Intent intent = new Intent(getActivity(), SyncGroupListActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    startActivity(intent);
+                }
                 return true;
             }
             case R.id.action_clear: {

@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="ru.sgu.univer.app.activity.SyncGroupActivity" >
+
+    <item android:id="@+id/action_show_rating"
+        android:title="@string/action_show_rating"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

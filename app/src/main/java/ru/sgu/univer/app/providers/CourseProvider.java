@@ -20,6 +20,8 @@ public class CourseProvider {
     public static Map<Integer, Course> courseMap = new HashMap<Integer, Course>();
     public static int uid = 0;
 
+    public static boolean logged = false;
+
     static {
         String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля", "Дима", "Леша", "Антон", "Иван"};
         String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко", "Солдатик", "Лепненко", "Завайчик", "Чапман"};

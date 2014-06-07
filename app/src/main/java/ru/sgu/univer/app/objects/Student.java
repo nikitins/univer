@@ -9,8 +9,9 @@ public class Student implements Serializable {
     public String surname;
     public String lastname;
     public String telefon;
-    public  String email;
+    public String email;
     public int groupId;
+    public String link;
 
     public Student(int id, String name, String surname, String lastname, String telefon, String email, int groupId) {
         this.id = id;
@@ -20,6 +21,13 @@ public class Student implements Serializable {
         this.telefon = telefon;
         this.email = email;
         this.groupId = groupId;
+    }
+
+    public Student(String name, String surname, String lastname, String link) {
+        this.name = name;
+        this.surname = surname;
+        this.lastname = lastname;
+        this.link = link;
     }
 
     public String getName() {

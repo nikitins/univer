@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.app.LoaderManager.LoaderCallbacks;
 import android.content.ContentResolver;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -16,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,21 +31,37 @@ import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.entity.BasicHttpEntity;
 import org.apache.http.entity.EntityTemplate;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicHeader;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
+
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.objects.MegaRatingTable;
+import ru.sgu.univer.app.objects.Student;
+import ru.sgu.univer.app.providers.CourseProvider;
+import ru.sgu.univer.app.utils.Parser;
 
 /**
  * A login screen that offers login via email/password.
@@ -139,14 +157,14 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
-            cancel = true;
+            cancel = false;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
             mEmailView.setError(getString(R.string.error_field_required));
             focusView = mEmailView;
-            cancel = true;
+            cancel = false;
         } else if (!isEmailValid(email)) {
             mEmailView.setError(getString(R.string.error_invalid_email));
             focusView = mEmailView;
@@ -163,6 +181,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
+            CourseProvider.logged = true;
+            Intent intent = new Intent(this, SyncGroupListActivity.class);
+            startActivity(intent);
         }
     }
     private boolean isEmailValid(String email) {
@@ -172,7 +193,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return true;
     }
 
     /**
@@ -211,6 +232,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public Loader<Cursor> onCreateLoader(int i, Bundle bundle) {
         return new CursorLoader(this,
@@ -311,33 +333,111 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
-            try {
-                DefaultHttpClient hc = new DefaultHttpClient();
-                ResponseHandler<String> res = new BasicResponseHandler();
-                HttpPost post = new HttpPost("http://requestb.in/19mv0k01");
-//                post.setHeader("Content-Type",
-//                        "application/x-www-form-urlencoded;charset=UTF-8;");
+//            try {
 //
-//                HttpParams params1 = new BasicHttpParams();
-//                params1.setParameter("user_login","Elay");
-//                params1.setParameter("user_password", "Zofckbd");
-//                post.setParams(params1);
+//                HttpClient hc = new DefaultHttpClient();
+//                HttpGet get = new HttpGet("http://cdobars.sgu.ru/Teacher/groupPoints.xhtml?g=170133186&s=1");
+//                get.setHeader("Cookie", "\t__utma=84755787.1464350218.1401944832.1401990220.1402150946.4; __utmz=84755787.1401944832.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); JSESSIONID=891458594F2F0F9952CF75070B15489F; __utmb=84755787.2.10.1402150946; __utmc=84755787; SPRING_SECURITY_REMEMBER_ME_COOKIE=cG96ZG55YWtvdnZhOjE0MDMzNjA1NjA1Mjg6ZTJjODhmOGNhODcyNDAxMWQwM2QwYTIyZWJlM2Q2YTg");
+//                HttpResponse r = hc.execute(get);
+//                Scanner s = new Scanner(r.getEntity().getContent());
+//                List<String> ss = new ArrayList<String>();
+//                while (s.hasNext()) {
+//                    String st = s.nextLine();
+//                    Log.d("Log", st);
+//                    ss.add(st);
+//                }
+//                MegaRatingTable m = Parser.parseRating(ss);
+//                for (int i = 0; i < m.students.size(); i++) {
+//                    System.out.print(m.students.get(i).toString() + " ");
+//                    for (int j = 0; j < m.lessons.size(); j++) {
+//                        System.out.print(m.getRatingByStudent(m.students.get(i).getSurname()));
+//                        System.out.println(" " + m.finMap.get(m.students.get(i).getSurname()));
+//                    }
+//                }
+//
+//
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+            if (false) {
 
-                HttpResponse response = hc.execute(post);
-                if (response.getStatusLine().getStatusCode() == 302) {
-                    return true;
-                } else {
-                    throw new IllegalArgumentException(response.getStatusLine().toString());
+                try {
+                    HttpClient httpclient = new DefaultHttpClient();
+//                HttpPost post = new HttpPost("http://requestb.in/1ca50mp1");
+                    HttpPost post = new HttpPost("http://cdobars.sgu.ru/j_spring_security_check");
+
+                    // Add your data
+//                post.setHeader("Content-Type", "application/x-www-form-urlencoded");
+                    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(3);
+                    nameValuePairs.add(new BasicNameValuePair("j_username", "pozdnyakovva"));
+                    nameValuePairs.add(new BasicNameValuePair("j_password", "e8fd9307"));
+                    nameValuePairs.add(new BasicNameValuePair("faces-redirect", "true"));
+                    UrlEncodedFormEntity en = new UrlEncodedFormEntity(nameValuePairs);
+//                en.setContentEncoding("UTF-8");
+//                en.setContentType("application/x-www-form-urlencoded");
+
+
+                    post.setHeader("User-Agent", "Apache-HttpClient/4.0.1 (java 1.5)");
+                    AbstractHttpEntity ent = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
+                    ent.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+//                ent.setContentEncoding("UTF-8");
+
+
+                    post.setEntity(ent);
+
+                    // Execute HTTP Post Request
+                    HttpResponse response = httpclient.execute(post);
+
+//                DefaultHttpClient hc = new DefaultHttpClient();
+//                ResponseHandler<String> res = new BasicResponseHandler();
+//                HttpPost post = new HttpPost("http://cdobars.sgu.ru/j_spring_security_check");
+//                post.setHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
+
+//                ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+//                nameValuePairs.add(new BasicNameValuePair("j_username", "pozdnyakovva"));
+//                nameValuePairs.add(new BasicNameValuePair("j_password", "e8fd9307"));
+//                nameValuePairs.add(new BasicNameValuePair("faces-redirect", "true"));
+//                UrlEncodedFormEntity formEntity = new UrlEncodedFormEntity(
+//                        nameValuePairs);
+//                formEntity.setContentType("application/x-www-form-urlencoded");
+//                post.setEntity(formEntity);
+
+//
+//
+//                post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+
+
+//                StringEntity se = new StringEntity(json);
+//
+//                se.setContentEncoding(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
+//                post.setEntity(se);
+//
+//                post.setEntity(new StringEntity(json.toString(), HTTP.UTF_8));
+//                HttpParams params2 = new BasicHttpParams();
+//
+//                params2.setParameter("j_username", "pozdnyakovva");
+//                params2.setParameter("j_password", "e8fd9307");
+//                params2.setParameter("faces-redirect", "true");
+//
+//                post.setParams(params2);
+
+                    Log.d("LOG", "post params" + post);
+//                HttpResponse response = hc.execute(post);
+                    if (response.getStatusLine().getStatusCode() == 302) {
+                        return true;
+                    } else {
+                        throw new IllegalArgumentException(response.getStatusLine().toString() + " " + response.getEntity().toString());
+                    }
+
+
+                } catch (ClientProtocolException e) {
+                    showMessage(e.getMessage());
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    showMessage(e.getMessage());
+                    e.printStackTrace();
                 }
-
-
-            } catch (ClientProtocolException e) {
-                showMessage(e.getMessage());
-                e.printStackTrace();
-            } catch (IOException e) {
-                showMessage(e.getMessage());
-                e.printStackTrace();
             }
 
 

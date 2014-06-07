@@ -12,6 +12,7 @@ public class Group implements Serializable {
     private int courseId;
     private List<Student> students = new ArrayList<Student>();
     private Map<String, Student> studentMap = new HashMap<String, Student>();
+    public String link;
 
     public Group(int id, String name, int courseId) {
         this.id = id;

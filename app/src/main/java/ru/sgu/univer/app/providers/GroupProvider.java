@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import ru.sgu.univer.app.activity.SyncGroupListActivity;
 import ru.sgu.univer.app.objects.Course;
 import ru.sgu.univer.app.objects.Group;
 
@@ -13,6 +14,11 @@ public class GroupProvider {
     public static List<Group> groups = new ArrayList<Group>();
     public static Map<Integer, List<Group>> groupMap = new HashMap<Integer, List<Group>>();
     public static int uid = 0;
+
+    static {
+        addGroup(SyncGroupListActivity.SYNC_COURSE_ID, "141", "http://cdobars.sgu.ru/Teacher/groupPoints.xhtml?g=141133016&s=0");
+        addGroup(SyncGroupListActivity.SYNC_COURSE_ID, "170", "http://cdobars.sgu.ru/Teacher/groupPoints.xhtml?g=170133186&s=1");
+    }
 
     public static Group getGroupById(int id) {
         for (Group group : groups) {
@@ -31,6 +37,17 @@ public class GroupProvider {
 
     public static Group addGroup(int courseId, String name) {
         Group group = new Group(getUid(), name, courseId);
+        groups.add(group);
+        if (!groupMap.containsKey(courseId)) {
+            groupMap.put(courseId, new ArrayList<Group>());
+        }
+        groupMap.get(courseId).add(group);
+        return group;
+    }
+
+    public static Group addGroup(int courseId, String name, String link) {
+        Group group = new Group(getUid(), name, courseId);
+        group.link = link;
         groups.add(group);
         if (!groupMap.containsKey(courseId)) {
             groupMap.put(courseId, new ArrayList<Group>());

@@ -33,6 +33,8 @@ public class Lesson implements Serializable {
 
     @Override
     public String toString() {
+        if (type == null)
+            return date;
         return type.toString() + " " + date;
     }
 }

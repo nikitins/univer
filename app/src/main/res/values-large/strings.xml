@@ -37,4 +37,7 @@
     <string name="action_chouse_dir">Выбрать</string>
     <string name="action_clear">Очистить базу данных</string>
     <string name="empty_dis_list">Список дисциплин</string>
+    <string name="empty_sync_group_list">Список групп пуст</string>
+    <string name="empty_sync_student_list">Список студентов пуст</string>
+    <string name="download">Загрузить данные</string>
 </resources>

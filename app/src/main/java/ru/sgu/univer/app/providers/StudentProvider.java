@@ -28,6 +28,18 @@ public class StudentProvider {
         return student;
     }
 
+    public static Student putIfNotExist(Student student, int groupId) {
+        student.groupId = groupId;
+        if(!studentsMap.containsKey(groupId)) {
+            studentsMap.put(groupId, new ArrayList<Student>());
+        }
+        if (!studentsMap.get(groupId).contains(student)) {
+            studentsMap.get(groupId).add(student);
+            students.add(student);
+        }
+        return student;
+    }
+
     public static Student edit(int id, String name, String lastName, String secondName, String tel, String email, int groupId) {
         for (Student student : students) {
             if(student.getId() == id) {
