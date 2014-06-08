@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Univer</string>
+    <string name="app_name">БАРС</string>
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
@@ -14,7 +14,7 @@
     <string name="action_course_remove">Удалить</string>
     <string name="empty_course_list">Список курсов пуст</string>
     <string name="empty_group_list">Список групп пуст</string>
-    <string name="title_activity_group_list">GroupListActivity</string>
+    <string name="title_activity_group_list">Группы</string>
     <string name="action_group_rename">Переименовать</string>
     <string name="action_group_remove">Удалить</string>
     <string name="action_add_group">Добавить</string>
@@ -22,7 +22,7 @@
     <string name="action_add_student">Добавить студента</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="action_add_lesson">Добавить занятие</string>
-    <string name="title_activity_create_student">CreateStudentActivity</string>
+    <string name="title_activity_create_student">Создание студента</string>
     <string name="Text_Imya">Имя</string>
     <string name="Text_Familia">Фамилия</string>
     <string name="Edit_Familia">Фамилия</string>
@@ -40,7 +40,7 @@
     <string name="title_activity_edit_student">Студент</string>
     <string name="Button_Student_edit">Изменить</string>
     <string name="action_show_rating">Показать рейтинг</string>
-    <string name="title_activity_rating">RatingActivity</string>
+    <string name="title_activity_rating">Рейтинг</string>
     <string name="action_add_column">Добавить занятие</string>
     <string name="data_string_event">Дата занятия</string>
     <string name="event_type_string">Тип занятия</string>
@@ -50,13 +50,13 @@
     <string name="action_prop">Настроить БАРС</string>
     <string name="action_change">Показать нечетную неделю</string>
     <string name="title_activity_cho">choActivity</string>
-    <string name="title_activity_sch">SchActivity</string>
+    <string name="title_activity_sch">Расписание</string>
     <string name="action_login">Войти в систему Ipsilon</string>
     <string name="action_export">Экспортировать в Excel</string>
     <string name="action_import">Импортировать из Excel</string>
     <string name="action_backup">Создать резервную копию БД</string>
     <string name="action_restore">Восстановить данные БД</string>
-    <string name="title_activity_brouse">BrouseActivity</string>
+    <string name="title_activity_brouse">Обзор</string>
     <string name="empty_directory">Список пуст</string>
     <string name="action_chouse_dir">Выбрать</string>
     <string name="action_clear">Очистить базу данных</string>

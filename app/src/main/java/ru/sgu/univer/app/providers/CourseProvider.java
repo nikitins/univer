@@ -35,12 +35,19 @@ public class CourseProvider {
                 for (int j = 0; j < 5; j++) {
                     Random random = new Random();
                     StudentProvider.add(names[random.nextInt(names.length)],
-                            lastNames[random.nextInt(lastNames.length)], "ivan", "555555",
+                            lastNames[random.nextInt(lastNames.length)], "", "555555",
                             "email@gmail.com",  groupid);
                 }
 
             }
         }
+        Course course = CourseProvider.getById(1);
+        int groupid = GroupProvider.addGroup(course.id, "121").getId();
+        StudentProvider.add("Иван", "Жданов", "Олегович", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Мария", "Раскова", "Викторовна", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Певал", "Прокофьев", "Дмитриевич", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Анастасия", "Литвинова", "Александровна", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Денис", "Курпатов", "Владимирович", "555555", "email@gmail.com",  groupid);
     }
 
     private static int getUid() {
