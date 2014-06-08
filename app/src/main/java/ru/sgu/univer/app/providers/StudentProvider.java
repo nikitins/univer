@@ -33,7 +33,18 @@ public class StudentProvider {
         if(!studentsMap.containsKey(groupId)) {
             studentsMap.put(groupId, new ArrayList<Student>());
         }
-        if (!studentsMap.get(groupId).contains(student)) {
+        boolean exist = false;
+        for (Student s : studentsMap.get(groupId)) {
+            if(s.lastname.equals(student.lastname)) {
+                exist = true;
+                break;
+            }
+        }
+
+        if (!exist) {
+            if(student.id == -1) {
+                student.id = getUid();
+            }
             studentsMap.get(groupId).add(student);
             students.add(student);
         }

@@ -60,6 +60,7 @@ import java.util.Scanner;
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.MegaRatingTable;
 import ru.sgu.univer.app.objects.Student;
+import ru.sgu.univer.app.providers.CookieProvider;
 import ru.sgu.univer.app.providers.CourseProvider;
 import ru.sgu.univer.app.utils.Parser;
 
@@ -337,7 +338,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 //
 //                HttpClient hc = new DefaultHttpClient();
 //                HttpGet get = new HttpGet("http://cdobars.sgu.ru/Teacher/groupPoints.xhtml?g=170133186&s=1");
-//                get.setHeader("Cookie", "\t__utma=84755787.1464350218.1401944832.1401990220.1402150946.4; __utmz=84755787.1401944832.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); JSESSIONID=891458594F2F0F9952CF75070B15489F; __utmb=84755787.2.10.1402150946; __utmc=84755787; SPRING_SECURITY_REMEMBER_ME_COOKIE=cG96ZG55YWtvdnZhOjE0MDMzNjA1NjA1Mjg6ZTJjODhmOGNhODcyNDAxMWQwM2QwYTIyZWJlM2Q2YTg");
+//                get.setHeader("Cookie", CookieProvider.cookie);
 //                HttpResponse r = hc.execute(get);
 //                Scanner s = new Scanner(r.getEntity().getContent());
 //                List<String> ss = new ArrayList<String>();

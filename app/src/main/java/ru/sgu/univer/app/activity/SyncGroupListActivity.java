@@ -30,6 +30,7 @@ import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Group;
 import ru.sgu.univer.app.objects.MegaRatingTable;
 import ru.sgu.univer.app.objects.Student;
+import ru.sgu.univer.app.providers.CookieProvider;
 import ru.sgu.univer.app.providers.GroupProvider;
 import ru.sgu.univer.app.providers.StudentProvider;
 import ru.sgu.univer.app.providers.SyncRatingProvider;
@@ -58,6 +59,7 @@ public class SyncGroupListActivity extends ListActivity {
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {
         int grId = adapter.getItem(position).getId();
+        showMessage("Загрузка...");
         GroupGetTask groupGetTask = new GroupGetTask(grId);
         groupGetTask.execute((Void) null);
     }
@@ -144,7 +146,7 @@ public class SyncGroupListActivity extends ListActivity {
                 Group group = GroupProvider.getGroupById(groupId);
                 HttpClient hc = new DefaultHttpClient();
                 HttpGet get = new HttpGet(group.link);
-                get.setHeader("Cookie", "\t__utma=84755787.1464350218.1401944832.1401990220.1402150946.4; __utmz=84755787.1401944832.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); JSESSIONID=891458594F2F0F9952CF75070B15489F; __utmb=84755787.2.10.1402150946; __utmc=84755787; SPRING_SECURITY_REMEMBER_ME_COOKIE=cG96ZG55YWtvdnZhOjE0MDMzNjA1NjA1Mjg6ZTJjODhmOGNhODcyNDAxMWQwM2QwYTIyZWJlM2Q2YTg");
+                get.setHeader("Cookie", CookieProvider.cookie);
 
                 MegaRatingTable m = null;
                 boolean ok = true;

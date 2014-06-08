@@ -24,6 +24,7 @@ public class Student implements Serializable {
     }
 
     public Student(String name, String surname, String lastname, String link) {
+        this.id = -1;
         this.name = name;
         this.surname = surname;
         this.lastname = lastname;

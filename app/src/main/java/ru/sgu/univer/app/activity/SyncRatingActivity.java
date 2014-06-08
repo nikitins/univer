@@ -1,10 +1,8 @@
 package ru.sgu.univer.app.activity;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -14,8 +12,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -25,12 +21,20 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.AbstractHttpEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,19 +43,13 @@ import java.util.Scanner;
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.objects.Group;
 import ru.sgu.univer.app.objects.Lesson;
-import ru.sgu.univer.app.objects.LessonType;
 import ru.sgu.univer.app.objects.MegaRatingTable;
-import ru.sgu.univer.app.objects.OperationType;
-import ru.sgu.univer.app.objects.RatingTable;
 import ru.sgu.univer.app.objects.Student;
+import ru.sgu.univer.app.providers.CookieProvider;
 import ru.sgu.univer.app.providers.GroupProvider;
-import ru.sgu.univer.app.providers.LessonTypeProvider;
-import ru.sgu.univer.app.providers.PerevodProvider;
-import ru.sgu.univer.app.providers.RatingProvider;
 import ru.sgu.univer.app.providers.StudentProvider;
 import ru.sgu.univer.app.providers.SyncRatingProvider;
 import ru.sgu.univer.app.utils.Parser;
-import ru.sgu.univer.app.writers.ExcelParser;
 
 public class SyncRatingActivity extends ActionBarActivity implements View.OnClickListener {
     public static final String GROUP_ID_EXTRA = "sync_group_id_extra";
@@ -65,8 +63,6 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
     private Map<Integer, TextView> oMap;
     public static Map<TextView, Integer> viewStudentMap;
     public static Map<TextView, Integer> viewColMap;
-    private int DATA_DIALOG_ID = 12;
-    TextView dateTextView;
     MegaRatingTable rating;
 
     @Override
@@ -101,9 +97,8 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
         }
 
 
-        for(int i = 0; i < students.size(); i++) {
+        for (int i = 0; i < students.size(); i++) {
             Student student = students.get(i);
-
 
 
             TableRow row = (TableRow) getLayoutInflater().inflate(R.layout.table_row, null);
@@ -124,6 +119,7 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
             }
             TextView sumText = (TextView) getLayoutInflater().inflate(R.layout.table_cell, null);
             sumText.setText(String.valueOf(rating.finMap.get(student.lastname)));
+            sumText.setOnClickListener(getViewListener(this));
             viewStudentMap.put(sumText, student.id);
             viewColMap.put(sumText, rating.lessons.size() - 1);
             row.addView(sumText);
@@ -145,6 +141,42 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
         }
     }
 
+    public View.OnClickListener getViewListener(final Context context) {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage("Оценка");
+                final LinearLayout linearLayout = (LinearLayout) getLayoutInflater().inflate(R.layout.mark_dialog, null);
+
+                final Spinner spinner = (Spinner) linearLayout.findViewById(R.id.mark_spinner);
+                List<String> marks = Arrays.asList("", "2", "3", "4", "5", "неявка");
+                final ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(context,
+                        android.R.layout.simple_spinner_item, marks);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spinner.setAdapter(dataAdapter);
+
+                builder.setView(linearLayout);
+
+                builder.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog,
+                                                int which) {
+                                String mark = (String) spinner.getSelectedItem();
+                                ((TextView) v).setText(mark);
+                                TextView tv = (TextView) v;
+                                int id = viewStudentMap.get(tv);
+                                rating.finMap.put(StudentProvider.getById(id).lastname, mark);
+                                dialog.dismiss();
+                            }
+                        }
+                );
+                builder.show();
+            }
+        };
+    }
+
     @Override
     public void onClick(final View v) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -158,7 +190,7 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
                     public void onClick(DialogInterface dialog,
                                         int which) {
                         ((TextView) v).setText(input.getText().toString());
-                        TextView tv = (TextView)v;
+                        TextView tv = (TextView) v;
                         int id = viewStudentMap.get(tv);
                         int pos = viewColMap.get(tv);
                         if (!"".equals(input.getText().toString())) {
@@ -192,11 +224,19 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == R.id.download) {
+        if (item.getItemId() == R.id.download) {
+            showMessage("Обновление...");
             GroupGetTask groupGetTask = new GroupGetTask(groupId);
             groupGetTask.execute((Void) null);
             return true;
         }
+        if (item.getItemId() == R.id.action_upload) {
+            showMessage("Загрузка данных на сервер...");
+            GroupPostTask groupPostTask = new GroupPostTask(groupId);
+            groupPostTask.execute((Void) null);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -221,7 +261,7 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
                 Group group = GroupProvider.getGroupById(groupId);
                 HttpClient hc = new DefaultHttpClient();
                 HttpGet get = new HttpGet(group.link);
-                get.setHeader("Cookie", "\t__utma=84755787.1464350218.1401944832.1401990220.1402150946.4; __utmz=84755787.1401944832.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); JSESSIONID=891458594F2F0F9952CF75070B15489F; __utmb=84755787.2.10.1402150946; __utmc=84755787; SPRING_SECURITY_REMEMBER_ME_COOKIE=cG96ZG55YWtvdnZhOjE0MDMzNjA1NjA1Mjg6ZTJjODhmOGNhODcyNDAxMWQwM2QwYTIyZWJlM2Q2YTg");
+                get.setHeader("Cookie", CookieProvider.cookie);
 
                 MegaRatingTable m = null;
                 boolean ok = true;
@@ -239,7 +279,7 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
                         } else {
                             ss.add(st);
                         }
-//                        Log.d("Log", ss.get(ss.size()-1));
+                        Log.d("Log", ss.get(ss.size() - 1));
 
                     }
                     try {
@@ -268,6 +308,95 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
         @Override
         protected void onPostExecute(final Boolean success) {
             setUp();
+        }
+
+        @Override
+        protected void onCancelled() {
+//            showProgress(false);
+        }
+    }
+
+    public class GroupPostTask extends AsyncTask<Void, Void, Boolean> {
+
+        private final int groupId;
+
+        GroupPostTask(int groupId) {
+            this.groupId = groupId;
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+            MegaRatingTable table = SyncRatingProvider.map.get(groupId);
+
+            try {
+                HttpClient httpclient = new DefaultHttpClient();
+//                HttpPost post = new HttpPost("http://requestb.in/y4iuh1y4");
+                HttpPost post = new HttpPost("http://cdobars.sgu.ru/Teacher/groupPoints.xhtml");
+
+                // Add your data
+                post.setHeader("Content-Type", "application/x-www-form-urlencoded");
+                post.setHeader("Cookie", CookieProvider.cookie);
+                List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+
+                for (Map.Entry<String, List<Integer>> entry : table.rating.entrySet()) {
+                    String fam = entry.getKey();
+                    int pos = table.getStudentPosByFam(fam);
+                    for (int i = 0; i < entry.getValue().size(); i++) {
+                        String col = table.getStringByPosition(i);
+                        int val = entry.getValue().get(i);
+                        nameValuePairs.add(new BasicNameValuePair("table:" + pos + ":" + col, String.valueOf(val)));
+                    }
+                    String fin = table.getFinToRequest(fam);
+                    nameValuePairs.add(new BasicNameValuePair("table:" + pos + ":grade", String.valueOf(fin)));
+                }
+
+                nameValuePairs.add(new BasicNameValuePair("form", "form"));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.ViewState", table.requestId));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.source", "btn"));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.partial.event", "click"));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.partial.execute", "btn form"));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.partial.render", "form"));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.behavior.event", "action"));
+                nameValuePairs.add(new BasicNameValuePair("javax.faces.partial.ajax", "true"));
+
+
+                UrlEncodedFormEntity en = new UrlEncodedFormEntity(nameValuePairs);
+                en.setContentType("application/x-www-form-urlencoded");
+
+
+                post.setHeader("User-Agent", "Apache-HttpClient/4.0.1 (java 1.5)");
+                AbstractHttpEntity ent = new UrlEncodedFormEntity(nameValuePairs, HTTP.UTF_8);
+                ent.setContentType("application/x-www-form-urlencoded; charset=UTF-8");
+
+                post.setEntity(ent);
+
+                HttpResponse response = httpclient.execute(post);
+                Log.d("LOG", response.getStatusLine().toString());
+                response = httpclient.execute(post);
+                Log.d("LOG", response.getStatusLine().toString());
+
+            } catch (ClientProtocolException e) {
+                showMessage(e.getMessage());
+                e.printStackTrace();
+            } catch (IOException e) {
+                showMessage(e.getMessage());
+                e.printStackTrace();
+            }
+
+
+            return true;
+        }
+
+        private void showMessage(String message) {
+            Toast.makeText(getApplicationContext(), message,
+                    Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+            setUp();
+            showMessage("Данные загружены");
         }
 
         @Override

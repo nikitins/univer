@@ -1,0 +1,5 @@
+package ru.sgu.univer.app.providers;
+
+public class CookieProvider {
+    public static final String cookie = "__utma=84755787.1464350218.1401944832.1402172842.1402216340.10; __utmz=84755787.1401944832.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); JSESSIONID=21EF9E29EFEBA117DFBE0AF837BD9C24; __utmb=84755787.2.10.1402216340; __utmc=84755787; SPRING_SECURITY_REMEMBER_ME_COOKIE=cG96ZG55YWtvdnZhOjE0MDM0MjU5NDMzMDQ6MjBhYTU3MDU5NGQ3MWQwYWQ3ZWEyODMwZTM0OTljMTM";
+}

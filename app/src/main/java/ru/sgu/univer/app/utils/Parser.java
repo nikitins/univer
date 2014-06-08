@@ -12,6 +12,7 @@ public class Parser {
     public static final String BALL_TAG = "studentStandatrTableTd studentStandatrTableExamin studentStandatrTableTdPaddingTeacher\"><input type=\"text\" name=\"table";
     public static final String SELECTED = "selected=\"selected\">";
     public static final String STUDENT_TAG = "linkToStudentsProfile";
+    public static final String ID_TAG = "name=\"javax.faces.ViewState\" id=\"javax.faces.ViewState\" value=\"";
 
     public static final String LINK = "href=\"";
     public static final String CELL = "<input type=\"text\" name=\"table:";
@@ -21,6 +22,7 @@ public class Parser {
         MegaRatingTable table = new MegaRatingTable();
         Student lastStudent = null;
         for (String s : strings) {
+            Log.d("Log", s);
             if(s.contains(STUDENT_TAG)) {
                 String link = s.substring(s.indexOf(LINK) + LINK.length()).split("\"")[0];
                 String name = s.split(">")[2].substring(2);
@@ -42,6 +44,10 @@ public class Parser {
             if(s.contains(SELECTED)) {
                 String cell = s.split(SELECTED)[1].split("<")[0];
                 table.finMap.put(lastStudent.lastname, cell);
+            }
+
+            if(s.contains(ID_TAG)) {
+                table.requestId = s.split(ID_TAG)[1].split("\"")[0];
             }
         }
         return table;

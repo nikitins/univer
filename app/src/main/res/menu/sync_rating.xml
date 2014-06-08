@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".activity.SyncRatingActivity" >
     <item android:id="@+id/download"
-        android:title="@string/download"
+        android:title="@string/download2"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_upload"
+        android:title="@string/upload"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>

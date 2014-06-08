@@ -67,5 +67,7 @@
     <string name="empty_sync_student_list">Список студентов пуст</string>
     <string name="title_activity_sync_rating">Рейтинг</string>
     <string name="download">Загрузить данные</string>
+    <string name="download2">Обновить</string>
+    <string name="upload">Загрузить данные на сервер</string>
 
 </resources>
