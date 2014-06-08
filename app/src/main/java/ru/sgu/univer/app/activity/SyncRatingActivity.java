@@ -53,7 +53,6 @@ import ru.sgu.univer.app.utils.Parser;
 
 public class SyncRatingActivity extends ActionBarActivity implements View.OnClickListener {
     public static final String GROUP_ID_EXTRA = "sync_group_id_extra";
-    public static final String GROUP_ID_RATING_PARAM = "group_id_rating_param";
 
     private int groupId;
     private int courseId;

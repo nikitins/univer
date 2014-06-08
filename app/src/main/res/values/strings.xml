@@ -69,5 +69,8 @@
     <string name="download">Загрузить данные</string>
     <string name="download2">Обновить</string>
     <string name="upload">Загрузить данные на сервер</string>
+    <string name="prompt_email2">Логин</string>
+    <string name="prompt_password2">Пароль</string>
+    <string name="action_sign_in2">Войти</string>
 
 </resources>

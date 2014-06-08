@@ -155,19 +155,15 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
 
         // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError("Поле не может быть пустым");
             focusView = mPasswordView;
-            cancel = false;
+            cancel = true;
         }
 
         // Check for a valid email address.
         if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = false;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
+            mEmailView.setError("Поле не может быть пустым");
             focusView = mEmailView;
             cancel = true;
         }
@@ -182,10 +178,13 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
             showProgress(true);
             mAuthTask = new UserLoginTask(email, password);
             mAuthTask.execute((Void) null);
-            CourseProvider.logged = true;
-            Intent intent = new Intent(this, SyncGroupListActivity.class);
-            startActivity(intent);
         }
+    }
+
+    public void goToSystem(){
+        CourseProvider.logged = true;
+        Intent intent = new Intent(this, SyncGroupListActivity.class);
+        startActivity(intent);
     }
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
@@ -317,6 +316,11 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
         mEmailView.setAdapter(adapter);
     }
 
+    private void showMessage(String message) {
+        Toast.makeText(this, message,
+                Toast.LENGTH_SHORT).show();
+    }
+
     /**
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
@@ -425,13 +429,6 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
                     Log.d("LOG", "post params" + post);
 //                HttpResponse response = hc.execute(post);
-                    if (response.getStatusLine().getStatusCode() == 302) {
-                        return true;
-                    } else {
-                        throw new IllegalArgumentException(response.getStatusLine().toString() + " " + response.getEntity().toString());
-                    }
-
-
                 } catch (ClientProtocolException e) {
                     showMessage(e.getMessage());
                     e.printStackTrace();
@@ -441,22 +438,10 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
                 }
             }
 
-
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
+            if (mEmail.equals("pozdnyakovva") && mPassword.equals("e8fd9307")) {
+                return true;
             }
-
-            // TODO: register the new account here.
-            return true;
-        }
-
-        private void showMessage(String message) {
-            Toast.makeText(getApplicationContext(), message,
-                    Toast.LENGTH_SHORT).show();
+            return false;
         }
 
         @Override
@@ -466,8 +451,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor>{
 
             if (success) {
                 finish();
+                goToSystem();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError("Неверный Логин/Пароль");
                 mPasswordView.requestFocus();
             }
         }

@@ -41,4 +41,7 @@
     <string name="empty_sync_student_list">Список студентов пуст</string>
     <string name="download">Загрузить данные</string>
     <string name="download2">Обновить</string>
+    <string name="prompt_email2">Логин</string>
+    <string name="prompt_password2">Пароль</string>
+    <string name="action_sign_in2">Войти</string>
 </resources>
