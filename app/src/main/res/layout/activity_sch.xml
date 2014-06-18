@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TableLayout android:layout_height="wrap_content"
+                android:layout_width="wrap_content">
+                <TableRow style="@style/HeaderRow">
+                    <TextView android:text="Понедельник"
+                        style="@style/HeaderText" />
+                    <TextView android:text="Вторник"
+                        style="@style/HeaderText"
+                        />
+                    <TextView android:text="Среда"
+                        style="@style/HeaderText" />
+                    <TextView android:text="Четверг"
+                        style="@style/HeaderText" />
+                    <TextView android:text="Пятница"
+                        style="@style/HeaderText" />
+                    <TextView android:text="Суббота"
+                        style="@style/HeaderText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="521 Гр \nСети Эвм"
+                        style="@style/BodyText" />
+                    <EditText android:text="\n"
+                        style="@style/BodyText"
+                        android:inputType="textMultiLine" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="123 гр \nМоделирование"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="321 гр \nМатан"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="321 Гр \nСети Эвм"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="223 гр \nМоделирование"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="521 Гр \nСети Эвм"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="111 гр \n Логика"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="321 гр \nМатан"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+                <TableRow style="@style/BodyRow">
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                    <EditText android:inputType="textMultiLine" android:text="\n"
+                        style="@style/BodyText" />
+                </TableRow>
+
+            </TableLayout>
+        </HorizontalScrollView>
+    </ScrollView>
+</LinearLayout>

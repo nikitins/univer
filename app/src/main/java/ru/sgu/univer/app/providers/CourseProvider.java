@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import ru.sgu.univer.app.objects.Course;
 
@@ -15,17 +16,38 @@ import ru.sgu.univer.app.objects.Course;
  */
 public class CourseProvider {
 
-    private static List<Course> items = new ArrayList<Course>();
-    private static Map<String, Course> itemMap = new HashMap<String, Course>();
-    private static int uid = 0;
+    public static List<Course> courses = new ArrayList<Course>();
+    public static Map<Integer, Course> courseMap = new HashMap<Integer, Course>();
+    public static int uid = 0;
+
+    public static boolean logged = false;
 
     static {
-        // Add 3 sample items.
-        add("Курс 1");
-        add("Курс 2");
-        add("Курс 3");
-        add("Курс 4");
-        add("Курс 5");
+        String[] names = new String[]{"Маша", "Петя", "Вася", "Сергей", "Оля", "Дима", "Леша", "Антон", "Иван"};
+        String[] lastNames = new String[]{"Прихотько", "Гайдук", "Кравченко", "Шматко", "Солдатик", "Лепненко", "Завайчик", "Чапман"};
+        add("Матан");
+        add("Сети ЭВМ");
+        add("Программирование");
+        for(int q = 0; q < courses.size(); q++) {
+            Course course = courses.get(q);
+            for (int i = 0; i < 5; i++) {
+                int groupid = GroupProvider.addGroup(course.id,  String.valueOf(q) + "0" + String.valueOf(i+1)).getId();
+                for (int j = 0; j < 5; j++) {
+                    Random random = new Random();
+                    StudentProvider.add(names[random.nextInt(names.length)],
+                            lastNames[random.nextInt(lastNames.length)], "", "555555",
+                            "email@gmail.com",  groupid);
+                }
+
+            }
+        }
+        Course course = CourseProvider.getById(1);
+        int groupid = GroupProvider.addGroup(course.id, "121").getId();
+        StudentProvider.add("Иван", "Жданов", "Олегович", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Мария", "Раскова", "Викторовна", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Певал", "Прокофьев", "Дмитриевич", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Анастасия", "Литвинова", "Александровна", "555555", "email@gmail.com",  groupid);
+        StudentProvider.add("Денис", "Курпатов", "Владимирович", "555555", "email@gmail.com",  groupid);
     }
 
     private static int getUid() {
@@ -33,32 +55,32 @@ public class CourseProvider {
     }
 
     public static void add(String name) {
-        Course item = new Course(String.valueOf(getUid()), name);
-        itemMap.put(item.id, item);
-        items.add(item);
+        Course item = new Course(getUid(), name);
+        courseMap.put(item.id, item);
+        courses.add(item);
     }
 
-    public static List<Course> getItems() {
-        return items;
+    public static List<Course> getCourses() {
+        return courses;
     }
 
-    public static Course getById(String id) {
-        return itemMap.get(id);
+    public static Course getById(int id) {
+        return courseMap.get(id);
     }
 
     public static Course getByPosition(int position) {
-        return items.get(position);
+        return courses.get(position);
     }
 
-    public static void removeById(String id) {
-        Course course = itemMap.remove(id);
-        items.remove(course);
+    public static void removeById(int id) {
+        Course course = courseMap.remove(id);
+        courses.remove(course);
     }
 
-    public static void renameById(String id, String newName) {
-        itemMap.get(id).name = newName;
-        for (Course item : items) {
-            if (item.id.equals(id)) {
+    public static void renameById(int id, String newName) {
+        courseMap.get(id).name = newName;
+        for (Course item : courses) {
+            if (item.id == id) {
                 item.name = newName;
                 break;
             }
@@ -66,7 +88,7 @@ public class CourseProvider {
     }
 
     public static boolean hasCourse(String name) {
-        for (Course item : items) {
+        for (Course item : courses) {
             if (item.name.equals(name)) {
                 return true;
             }
@@ -74,4 +96,9 @@ public class CourseProvider {
         return false;
     }
 
+    public static void clear() {
+        courses.clear();
+        courseMap.clear();
+        uid = 0;
+    }
 }

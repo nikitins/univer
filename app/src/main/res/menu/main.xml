@@ -3,12 +3,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ru.sgu.univer.app.activity.MainActivity" >
     
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
     <item android:id="@+id/action_add_course"
         android:title="@string/action_add_course"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_login"
+        android:title="@string/action_login"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_backup"
+        android:title="@string/action_backup"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_restore"
+        android:title="@string/action_restore"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_clear"
+        android:title="@string/action_clear"
         android:orderInCategory="100"
         app:showAsAction="never" />
 </menu>

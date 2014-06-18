@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="fill_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout android:id="@+id/Button_Back_to_Show_edit_group_and_Button_Add_Student" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+        <Button android:id="@+id/Button_Back_to_Show_edit_group" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="@string/Button_Back" android:layout_weight="1.0" >
+            <requestFocus />
+        </Button>
+        <Button android:id="@+id/Button_Save_student" android:layout_width="fill_parent" android:layout_height="fill_parent" android:text="@string/Button_Student_edit" android:layout_weight="1.0"  android:onClick="editStudent"/>
+    </LinearLayout>
+    <ScrollView android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_above="@id/Button_Back_to_Show_edit_group_and_Button_Add_Student" android:layout_alignParentTop="true">
+        <LinearLayout android:orientation="vertical" android:layout_width="fill_parent" android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Text_Familia" />
+            <EditText android:id="@+id/Show_edit_familia" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Familia" android:inputType="textPersonName" >
+                <requestFocus />
+            </EditText>
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/Text_Imya"/>
+            <EditText android:id="@+id/Show_edit_imya" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Imya" android:inputType="textPersonName" />
+            <TextView android:layout_width="fill_parent" android:layout_height="wrap_content" android:text="@string/Text_Otchestvo" />
+            <EditText android:id="@+id/Show_edit_Otchestvo" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Otchestvo" android:inputType="textPersonName"  />
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Text_Telefon_mob"  />
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/Button_Call_mobe" android:background="@drawable/call_up" android:layout_width="36.0dip" android:layout_height="36.0dip" />
+                <EditText android:id="@+id/Show_edit_Telefon_mob" android:layout_width="fill_parent" android:layout_height="wrap_content"  android:inputType="phone"/>
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="fill_parent" android:text="@string/Text_Email"  />
+            <LinearLayout android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/Button_maile" android:background="@drawable/mail_up" android:layout_width="36.0dip" android:layout_height="36.0dip" />
+                <EditText android:id="@+id/Show_edit_Email" android:layout_width="fill_parent" android:layout_height="wrap_content" android:hint="@string/Edit_Email" android:maxLines="5" android:inputType="textEmailAddress" android:isScrollContainer="true"  />
+            </LinearLayout>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/Text_Group"  />
+            <TextView android:id="@+id/Show_edit_student_group" android:layout_width="fill_parent" android:layout_height="wrap_content" />
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

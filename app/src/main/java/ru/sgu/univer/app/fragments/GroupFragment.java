@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -14,6 +16,8 @@ import java.util.Random;
 
 import ru.sgu.univer.app.R;
 import ru.sgu.univer.app.dummy.DummyContent;
+import ru.sgu.univer.app.objects.Student;
+import ru.sgu.univer.app.providers.StudentProvider;
 
 /**
  * A fragment representing a list of Items.
@@ -23,23 +27,17 @@ import ru.sgu.univer.app.dummy.DummyContent;
  */
 public class GroupFragment extends ListFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private static final String GROUP_ID_PARAM = "group_id_param";
+    private int groupId;
 
     private OnFragmentInteractionListener mListener;
+    private ArrayAdapter<Student> adapter;
 
     // TODO: Rename and change types of parameters
-    public static GroupFragment newInstance() {
+    public static GroupFragment newInstance(int groupId) {
         GroupFragment fragment = new GroupFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
+        args.putInt(GROUP_ID_PARAM, groupId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,14 +54,13 @@ public class GroupFragment extends ListFragment {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            groupId = getArguments().getInt(GROUP_ID_PARAM, 0);
         }
-//        String data[] = new String[] { "one", "two", "three", "four" };
-        String data[] = new String[] { "one", "two", "three", "four" };
 
-        setListAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.simple_list_item_1, data));
+        adapter = new ArrayAdapter<Student>(getActivity(),
+                android.R.layout.simple_list_item_1, StudentProvider.getStudentsByGroupId(groupId));
+        setListAdapter(adapter);
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -99,8 +96,14 @@ public class GroupFragment extends ListFragment {
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
-            mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+            mListener.onFragmentInteraction("1");
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.group, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     /**

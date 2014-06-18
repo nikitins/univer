@@ -2,6 +2,7 @@ package ru.sgu.univer.app.activity;
 
 import java.util.Locale;
 
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -14,33 +15,27 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ru.sgu.univer.app.fragments.GroupFragment;
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.fragments.RatingFragment;
 
-public class GroupActivity extends ActionBarActivity implements GroupFragment.OnFragmentInteractionListener {
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
+public class GroupActivity extends ActionBarActivity implements GroupFragment.OnFragmentInteractionListener, RatingFragment.OnFragmentInteractionListener {
+    public static final String GROUP_ID_EXTRA = "group_id_extra";
     SectionsPagerAdapter mSectionsPagerAdapter;
     GroupFragment groupFragment;
-
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
+    RatingFragment ratingFragment;
     ViewPager mViewPager;
+    int currentFragment = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group);
-        groupFragment = GroupFragment.newInstance();
+        int groupId = getIntent().getIntExtra(GROUP_ID_EXTRA, 0);
+        groupFragment = GroupFragment.newInstance(groupId);
+        ratingFragment = RatingFragment.newInstance(groupId);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -53,30 +48,13 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.group, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
     public void onFragmentInteraction(String id) {
-        //TODO
     }
 
+    @Override
+    public void onTableFragmentInteraction(Uri uri) {
+        showMessage(uri.toString());
+    }
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -93,8 +71,14 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
 //            getItem is called to instantiate the fragment for the given page.
 //            Return a PlaceholderFragment (defined as a static inner class below).
             if (position == 0) {
+                currentFragment = 0;
                 return groupFragment;
             }
+            if (position == 1) {
+                currentFragment = 1;
+                return ratingFragment;
+            }
+            currentFragment = 2;
             return PlaceholderFragment.newInstance(position + 1);
         }
 
@@ -117,6 +101,11 @@ public class GroupActivity extends ActionBarActivity implements GroupFragment.On
             }
             return null;
         }
+    }
+
+    private void showMessage(String message) {
+        Toast.makeText(getApplicationContext(), message,
+                Toast.LENGTH_SHORT).show();
     }
 
     /**

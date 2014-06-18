@@ -15,7 +15,6 @@ import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +25,10 @@ import android.widget.Toast;
 
 import ru.sgu.univer.app.fragments.CourseFragment;
 import ru.sgu.univer.app.R;
+import ru.sgu.univer.app.fragments.RatingFragment;
+import ru.sgu.univer.app.fragments.ScheduleFragment;
 import ru.sgu.univer.app.objects.Course;
+import ru.sgu.univer.app.providers.CourseProvider;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
         CourseFragment.OnCourseFragmentItemClickListener {
@@ -60,28 +62,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        switch (id) {
-            case R.id.action_settings: {
-                return true;
-            }
-            case R.id.action_add_course: {
-                addCourse();
-                return true;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         getMenuInflater().inflate(R.menu.course_context, menu);
@@ -104,46 +84,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         return super.onContextItemSelected(item);
     }
 
-    public void addCourse() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Введите имя");
-        builder.setCancelable(false);
-        final EditText input = new EditText(this);
-        builder.setView(input);
-        builder.setPositiveButton("Добавить",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        String name = input.getText().toString();
-                        if("".equals(name)) {
-                            showMessage("Имя не может быть пустым.");
-                            dialog.dismiss();
-                            return;
-                        }
-//                        if(CourseProvider.hasCourse(name)) {
-//                            showMessage("Имя " + name + " уже зенято.");
-//                            dialog.dismiss();
-//                            return;
-//                        }
-                        courseFragment.addCourse(name);
-                    }
-
-                });
-        builder.setNegativeButton("Отмена",
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog,
-                                        int which) {
-                        dialog.cancel();
-                    }
-                });
-        builder.show();
-    }
 
     public void removeCourse(final MenuItem item) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        final Course course = courseFragment.getCourseByPosition(aMenuInfo.position);
+        final Course course = CourseProvider.getByPosition(aMenuInfo.position);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Вы хотите удалить " + course.name + "?");
         builder.setCancelable(false);
@@ -172,7 +116,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     private void renameCourse(MenuItem item) {
         AdapterView.AdapterContextMenuInfo aMenuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        final Course course = courseFragment.getCourseByPosition(aMenuInfo.position);
+        final Course course = CourseProvider.getByPosition(aMenuInfo.position);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("Введите новое имя");
         builder.setCancelable(false);
@@ -190,11 +134,11 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             dialog.dismiss();
                             return;
                         }
-//                        if(CourseProvider.hasCourse(newName) && !newName.equals(course.name)) {
-//                            showMessage("Имя " + newName + " уже зенято.");
-//                            dialog.dismiss();
-//                            return;
-//                        }
+                        if(CourseProvider.hasCourse(newName) && !newName.equals(course.name)) {
+                            showMessage("Имя " + newName + " уже зенято.");
+                            dialog.dismiss();
+                            return;
+                        }
                         courseFragment.renameCourse(course.id, newName);
                     }
 
@@ -208,15 +152,12 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     }
                 });
         builder.show();
-
-
     }
 
     private void showMessage(String message) {
         Toast.makeText(getApplicationContext(), message,
                 Toast.LENGTH_SHORT).show();
     }
-
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction fragmentTransaction) {
@@ -232,9 +173,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
     @Override
-    public void onCourseFragmentItemClick(String id) {
+    public void onCourseFragmentItemClick(int id) {
         Intent intent = new Intent(this, GroupListActivity.class);
-//        intent.putExtra("parent", CourseProvider.getById(id).toString());
+        intent.putExtra(GroupListActivity.COURSE_ID_EXTRA, CourseProvider.getById(id).id);
         startActivity(intent);
     }
 
@@ -248,7 +189,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         public Fragment getItem(int position) {
             // getItem is called to instantiate the fragment for the given page.
             // Return a PlaceholderFragment (defined as a static inner class below).
-            if (position == 2) {
+            if (position == 1) {
+                return new ScheduleFragment();
+            }
+            if (position == 0) {
                 return courseFragment;
             }
             return PlaceholderFragment.newInstance(position + 1);
@@ -257,18 +201,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 2;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
             Locale l = Locale.getDefault();
             switch (position) {
-                case 0:
-                    return getString(R.string.title_section1).toUpperCase(l);
                 case 1:
-                    return getString(R.string.title_section2).toUpperCase(l);
-                case 2:
+                    return "Расписание";
+                case 0:
                     return "Рейтинг";
             }
             return null;
