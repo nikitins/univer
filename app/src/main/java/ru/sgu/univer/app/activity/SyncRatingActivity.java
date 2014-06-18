@@ -260,7 +260,7 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
                 Group group = GroupProvider.getGroupById(groupId);
                 HttpClient hc = new DefaultHttpClient();
                 HttpGet get = new HttpGet(group.link);
-                get.setHeader("Cookie", CookieProvider.cookie);
+                get.setHeader("Cookie", CookieProvider.getCookie());
 
                 MegaRatingTable m = null;
                 boolean ok = true;
@@ -335,7 +335,7 @@ public class SyncRatingActivity extends ActionBarActivity implements View.OnClic
 
                 // Add your data
                 post.setHeader("Content-Type", "application/x-www-form-urlencoded");
-                post.setHeader("Cookie", CookieProvider.cookie);
+                post.setHeader("Cookie", CookieProvider.getCookie());
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 
                 for (Map.Entry<String, List<Integer>> entry : table.rating.entrySet()) {

@@ -146,7 +146,7 @@ public class SyncGroupListActivity extends ListActivity {
                 Group group = GroupProvider.getGroupById(groupId);
                 HttpClient hc = new DefaultHttpClient();
                 HttpGet get = new HttpGet(group.link);
-                get.setHeader("Cookie", CookieProvider.cookie);
+                get.setHeader("Cookie", CookieProvider.getCookie());
 
                 MegaRatingTable m = null;
                 boolean ok = true;
